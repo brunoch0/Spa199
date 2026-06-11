@@ -1,65 +1,121 @@
-import Image from "next/image";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { TherapistCard } from "@/components/therapist-card";
+import { SERVICE_TYPES } from "@/lib/constants";
+import type { Therapist } from "@/lib/types";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const supabase = await createClient();
+
+  const [{ data: therapists }, { data: notices }] = await Promise.all([
+    supabase
+      .from("therapists")
+      .select("*, profile:profiles(*), services:therapist_services(*)")
+      .eq("is_approved", true)
+      .order("rating_avg", { ascending: false })
+      .limit(4),
+    supabase
+      .from("notices")
+      .select("*")
+      .eq("is_published", true)
+      .order("publish_at", { ascending: false })
+      .limit(2),
+  ]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-10">
+      {/* Hero */}
+      <section className="rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 px-6 py-12 text-white sm:px-10">
+        <h1 className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl">
+          Hotel-quality massage,
+          <br />
+          delivered to your door in Dubai
+        </h1>
+        <p className="mt-3 max-w-md text-emerald-50">
+          Certified therapists, transparent reviews, upfront prices.
+          From AED 199 — at your hotel, home or office.
+        </p>
+        <div className="mt-6 flex gap-3">
+          <Button asChild size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50">
+            <Link href="/search">Book now</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white">
+            <Link href="/signup?role=therapist">Join as therapist</Link>
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Notices */}
+      {notices && notices.length > 0 && (
+        <section className="grid gap-3 sm:grid-cols-2">
+          {notices.map((n) => (
+            <Card key={n.id} className="border-emerald-100 bg-emerald-50/50">
+              <CardContent className="flex items-start gap-3 p-4">
+                <Badge variant={n.type === "promotion" ? "default" : "secondary"} className={n.type === "promotion" ? "bg-emerald-600" : ""}>
+                  {n.type === "promotion" ? "Promo" : "Notice"}
+                </Badge>
+                <div>
+                  <p className="font-medium">{n.title}</p>
+                  <p className="mt-1 text-sm text-neutral-600">{n.body}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </section>
+      )}
+
+      {/* Service types */}
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Browse by treatment</h2>
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+          {SERVICE_TYPES.map((s) => (
+            <Link
+              key={s.value}
+              href={`/search?service=${s.value}`}
+              className="rounded-xl border bg-white p-3 text-center text-sm font-medium transition hover:border-emerald-400 hover:shadow-sm"
+            >
+              {s.label}
+            </Link>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Top therapists */}
+      <section>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Top-rated therapists</h2>
+          <Button asChild variant="link" className="text-emerald-700">
+            <Link href="/search">View all →</Link>
+          </Button>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {(therapists as Therapist[] | null)?.map((t) => (
+            <TherapistCard key={t.id} therapist={t} />
+          ))}
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="rounded-2xl border bg-white p-6">
+        <h2 className="mb-4 text-xl font-semibold">How it works</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            ["1. Choose", "Browse verified profiles, real reviews and upfront prices."],
+            ["2. Book", "Pick a time slot, enter your hotel or home address, pay securely."],
+            ["3. Relax", "Your therapist arrives with everything needed. Just unwind."],
+          ].map(([title, desc]) => (
+            <div key={title}>
+              <p className="font-semibold text-emerald-700">{title}</p>
+              <p className="mt-1 text-sm text-neutral-600">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
