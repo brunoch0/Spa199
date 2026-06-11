@@ -173,8 +173,16 @@ export default async function TherapistDetailPage({
           </CardHeader>
           <CardContent className="space-y-3">
             {therapist.services?.sort((a, b) => Number(a.price_aed) - Number(b.price_aed)).map((s) => (
-              <div key={s.id} className="flex items-center justify-between rounded-lg border p-3">
-                <div>
+              <div key={s.id} className="flex items-center gap-3 rounded-lg border p-3">
+                {s.photo_url && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={s.photo_url}
+                    alt={serviceLabel(s.service_type)}
+                    className="size-12 shrink-0 rounded-lg border object-cover"
+                  />
+                )}
+                <div className="flex-1">
                   <p className="font-medium">{serviceLabel(s.service_type)}</p>
                   <p className="text-sm text-neutral-500">{s.duration_min} min</p>
                 </div>

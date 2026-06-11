@@ -201,9 +201,17 @@ export default function BookingPage() {
                     setTime(null);
                     setStep("time");
                   }}
-                  className={`flex w-full items-center justify-between rounded-lg border p-4 text-left transition hover:border-emerald-400 ${service?.id === s.id ? "border-emerald-500 bg-emerald-50" : ""}`}
+                  className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition hover:border-emerald-400 ${service?.id === s.id ? "border-emerald-500 bg-emerald-50" : ""}`}
                 >
-                  <div>
+                  {s.photo_url && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={s.photo_url}
+                      alt={serviceLabel(s.service_type)}
+                      className="size-14 shrink-0 rounded-lg border object-cover"
+                    />
+                  )}
+                  <div className="flex-1">
                     <p className="font-medium">{serviceLabel(s.service_type)}</p>
                     <p className="text-sm text-neutral-500">{s.duration_min} min</p>
                   </div>

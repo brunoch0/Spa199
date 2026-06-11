@@ -29,7 +29,7 @@ export function PhotoGallery({
   }
 
   async function upload(file: File) {
-    if (photos.length >= 6) return toast.error("Max 6 photos");
+    if (photos.length >= 10) return toast.error("Max 10 photos");
     setBusy(true);
     const ext = file.name.split(".").pop() ?? "jpg";
     const path = `gallery/${therapistId}-${Date.now()}.${ext}`;
@@ -60,7 +60,7 @@ export function PhotoGallery({
             </button>
           </div>
         ))}
-        {photos.length < 6 && (
+        {photos.length < 10 && (
           <button
             onClick={() => inputRef.current?.click()}
             disabled={busy}

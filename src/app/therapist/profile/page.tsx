@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { SERVICE_TYPES, DUBAI_AREAS, serviceLabel, formatAED } from "@/lib/constants";
 import { AvatarUpload } from "@/components/avatar-upload";
 import { PhotoGallery } from "./photo-gallery";
+import { ServicePhotoButton } from "./service-photo-button";
 import type { Therapist, TherapistService } from "@/lib/types";
 
 export default function TherapistProfilePage() {
@@ -227,8 +228,20 @@ export default function TherapistProfilePage() {
         </CardHeader>
         <CardContent className="space-y-3">
           {services.map((s) => (
-            <div key={s.id} className="flex items-center justify-between rounded-lg border p-3">
-              <p>
+            <div key={s.id} className="flex items-center gap-3 rounded-lg border p-3">
+              {profileId && (
+                <ServicePhotoButton
+                  serviceId={s.id}
+                  therapistId={profileId}
+                  photoUrl={s.photo_url}
+                  onChange={(url) =>
+                    setServices((prev) =>
+                      prev.map((x) => (x.id === s.id ? { ...x, photo_url: url } : x))
+                    )
+                  }
+                />
+              )}
+              <p className="flex-1">
                 {serviceLabel(s.service_type)} · {s.duration_min} min ·{" "}
                 <span className="font-semibold text-emerald-700">{formatAED(s.price_aed)}</span>
               </p>

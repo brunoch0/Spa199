@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "spa199",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "env": { "PORT": "3199" },
+      "port": 3199
+    }
+  ]
+}

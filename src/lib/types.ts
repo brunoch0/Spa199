@@ -36,6 +36,7 @@ export interface TherapistService {
   service_type: string;
   duration_min: number;
   price_aed: number;
+  photo_url: string | null;
 }
 
 export interface AvailabilitySlot {
