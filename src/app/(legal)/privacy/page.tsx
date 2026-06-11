@@ -1,9 +1,9 @@
-export const metadata = { title: "Privacy Policy — 199 Spa Dubai" };
+export const metadata = { title: "Privacy Policy — SPA199" };
 
 export default function PrivacyPage() {
   return (
     <>
-      <p className="t-overline">199 Spa Dubai</p>
+      <p className="t-overline">SPA199</p>
       <h1>Privacy Policy</h1>
       <p>Last updated: June 2026</p>
 
@@ -34,7 +34,7 @@ export default function PrivacyPage() {
       <p>
         We keep account data while your account is active. You can update your details in
         Account Settings, or request export or deletion of your data at any time by
-        contacting support@199spa.ae. We comply with UAE Federal Decree-Law No. 45 of 2021
+        contacting support@spa199.ae. We comply with UAE Federal Decree-Law No. 45 of 2021
         on Personal Data Protection.
       </p>
 
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
       </p>
 
       <h2>Contact</h2>
-      <p>199 Spa Dubai · Dubai, United Arab Emirates · support@199spa.ae</p>
+      <p>SPA199 · Dubai, United Arab Emirates · support@spa199.ae</p>
     </>
   );
 }

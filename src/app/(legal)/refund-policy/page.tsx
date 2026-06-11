@@ -1,9 +1,9 @@
-export const metadata = { title: "Cancellation & Refund Policy — 199 Spa Dubai" };
+export const metadata = { title: "Cancellation & Refund Policy — SPA199" };
 
 export default function RefundPolicyPage() {
   return (
     <>
-      <p className="t-overline">199 Spa Dubai</p>
+      <p className="t-overline">SPA199</p>
       <h1>Cancellation & Refund Policy</h1>
       <p>Last updated: June 2026</p>
 
@@ -27,7 +27,7 @@ export default function RefundPolicyPage() {
         your bank.
       </p>
 
-      <h2>Cancellation by the therapist or 199 Spa Dubai</h2>
+      <h2>Cancellation by the therapist or SPA199</h2>
       <p>
         If your therapist cancels a confirmed booking, or we are unable to provide the
         service for any reason, you receive a 100% refund regardless of timing.
@@ -37,11 +37,11 @@ export default function RefundPolicyPage() {
       <p>
         If a session did not take place or there was a serious issue with the service,
         contact us within 48 hours via the booking page ("Contact support") or at
-        support@199spa.ae. Verified cases are refunded in part or in full at our discretion.
+        support@spa199.ae. Verified cases are refunded in part or in full at our discretion.
       </p>
 
       <h2>Contact</h2>
-      <p>199 Spa Dubai · Dubai, United Arab Emirates · support@199spa.ae</p>
+      <p>SPA199 · Dubai, United Arab Emirates · support@spa199.ae</p>
     </>
   );
 }

@@ -48,7 +48,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ════════ 199 Spa Dubai — brand tokens (gold foil on onyx, emerald velvet, cream marble) ════════ */
+/* ════════ SPA199 — brand tokens (gold foil on onyx, emerald velvet, cream marble) ════════ */
 :root {
   /* Gold — the signature */
   --gold-50:  #FBF6EA;

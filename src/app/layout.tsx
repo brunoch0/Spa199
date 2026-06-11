@@ -16,7 +16,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "199 Spa Dubai — On-demand massage, at your door",
+  title: "SPA199 — On-demand massage in Dubai, at your door",
   description:
     "Certified therapists, premium oils and warmed linens — at your hotel or home in Dubai. From AED 199.",
 };

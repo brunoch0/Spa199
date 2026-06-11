@@ -33,23 +33,23 @@ export async function SiteHeader() {
     >
       <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4">
         {/* Brand wordmark — serif gold numeral + wide-tracked caps */}
-        <Link href={homeByRole} className="flex items-baseline gap-2">
+        <Link href={homeByRole} className="flex items-baseline gap-1.5">
+          <span
+            className="uppercase"
+            style={{
+              color: "var(--gold-200)",
+              fontSize: 14,
+              fontWeight: 500,
+              letterSpacing: "0.3em",
+            }}
+          >
+            SPA
+          </span>
           <span
             className="font-display leading-none"
             style={{ color: "var(--gold-300)", fontSize: 27, fontWeight: 600 }}
           >
             199
-          </span>
-          <span
-            className="uppercase"
-            style={{
-              color: "var(--gold-200)",
-              fontSize: 11,
-              fontWeight: 500,
-              letterSpacing: "0.34em",
-            }}
-          >
-            Spa&nbsp;Dubai
           </span>
         </Link>
 
