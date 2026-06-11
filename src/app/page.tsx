@@ -14,7 +14,7 @@ export default async function HomePage() {
   const [{ data: therapists }, { data: notices }] = await Promise.all([
     supabase
       .from("therapists")
-      .select("*, profile:profiles(*), services:therapist_services(*)")
+      .select("*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*)")
       .eq("is_approved", true)
       .order("rating_avg", { ascending: false })
       .limit(4),

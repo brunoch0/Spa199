@@ -8,7 +8,7 @@ export default async function AdminPhotosPage() {
   const { data: pending } = await supabase
     .from("media_reviews")
     .select(
-      "*, therapist:therapists(photos, profile:profiles(full_name)), service:therapist_services(service_type, duration_min)"
+      "*, therapist:therapists(photos, profile:profiles!therapists_id_fkey(full_name)), service:therapist_services(service_type, duration_min)"
     )
     .eq("status", "pending")
     .order("created_at");

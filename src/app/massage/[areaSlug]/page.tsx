@@ -41,7 +41,7 @@ export default async function AreaLandingPage({
   const supabase = await createClient();
   const { data } = await supabase
     .from("therapists")
-    .select("*, profile:profiles(*), services:therapist_services(*)")
+    .select("*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*)")
     .eq("is_approved", true)
     .contains("service_areas", [area])
     .order("rating_avg", { ascending: false });

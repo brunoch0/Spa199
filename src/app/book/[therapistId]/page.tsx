@@ -55,7 +55,7 @@ export default function BookingPage() {
         await Promise.all([
           supabase
             .from("therapists")
-            .select("*, profile:profiles(*), services:therapist_services(*)")
+            .select("*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*)")
             .eq("id", therapistId)
             .single(),
           supabase.from("availability_slots").select("*").eq("therapist_id", therapistId),

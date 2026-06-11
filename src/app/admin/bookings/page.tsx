@@ -20,7 +20,7 @@ export default async function AdminBookingsPage() {
   const { data: bookings } = await supabase
     .from("bookings")
     .select(
-      "*, customer:profiles!bookings_customer_id_fkey(full_name), therapist:therapists(profile:profiles(full_name))"
+      "*, customer:profiles!bookings_customer_id_fkey(full_name), therapist:therapists(profile:profiles!therapists_id_fkey(full_name))"
     )
     .order("created_at", { ascending: false })
     .limit(100);

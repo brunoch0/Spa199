@@ -28,7 +28,7 @@ export default async function BookingDetailPage({
     await Promise.all([
       supabase
         .from("bookings")
-        .select("*, therapist:therapists(id, profile:profiles(full_name, avatar_url))")
+        .select("*, therapist:therapists(id, profile:profiles!therapists_id_fkey(full_name, avatar_url))")
         .eq("id", id)
         .single(),
       supabase.from("payments").select("*").eq("booking_id", id).maybeSingle(),

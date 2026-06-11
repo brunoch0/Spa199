@@ -18,7 +18,7 @@ export default async function BookingsPage() {
   const supabase = await createClient();
   const { data: bookings } = await supabase
     .from("bookings")
-    .select("*, therapist:therapists(id, profile:profiles(full_name, avatar_url))")
+    .select("*, therapist:therapists(id, profile:profiles!therapists_id_fkey(full_name, avatar_url))")
     .eq("customer_id", profile.id)
     .order("booking_date", { ascending: false })
     .order("start_time", { ascending: false });

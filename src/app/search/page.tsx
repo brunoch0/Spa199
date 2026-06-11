@@ -21,7 +21,7 @@ export default async function SearchPage({
 
   let query = supabase
     .from("therapists")
-    .select("*, profile:profiles(*), services:therapist_services(*)")
+    .select("*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*)")
     .eq("is_approved", true)
     .order("rating_avg", { ascending: false });
 

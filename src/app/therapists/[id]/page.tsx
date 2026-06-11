@@ -23,7 +23,7 @@ export default async function TherapistDetailPage({
   const [{ data: t }, { data: reviews }] = await Promise.all([
     supabase
       .from("therapists")
-      .select("*, profile:profiles(*), services:therapist_services(*)")
+      .select("*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*)")
       .eq("id", id)
       .single(),
     supabase

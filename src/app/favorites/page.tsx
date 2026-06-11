@@ -13,7 +13,7 @@ export default async function FavoritesPage() {
   const supabase = await createClient();
   const { data } = await supabase
     .from("favorites")
-    .select("therapist:therapists(*, profile:profiles(*), services:therapist_services(*))")
+    .select("therapist:therapists(*, profile:profiles!therapists_id_fkey(*), services:therapist_services(*))")
     .eq("customer_id", profile.id)
     .order("created_at", { ascending: false });
 

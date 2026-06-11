@@ -8,7 +8,7 @@ export default async function AdminReviewsPage() {
   const { data: reviews } = await supabase
     .from("reviews")
     .select(
-      "*, customer:profiles!reviews_customer_id_fkey(full_name), therapist:therapists(profile:profiles(full_name))"
+      "*, customer:profiles!reviews_customer_id_fkey(full_name), therapist:therapists(profile:profiles!therapists_id_fkey(full_name))"
     )
     .order("created_at", { ascending: false })
     .limit(100);
