@@ -2,7 +2,8 @@
 
 두바이 출장 온디맨드 마사지 서비스. 검증된 테라피스트를 호텔/집/오피스로 부르는 예약 플랫폼.
 
-**Stack:** Next.js 16 (App Router) · Tailwind v4 · shadcn/ui · Supabase (Auth + Postgres + RLS)
+**🌐 Production:** https://spa199.vercel.app
+**Stack:** Next.js 16 (App Router) · Tailwind v4 · shadcn/ui · Supabase (Auth + Postgres + Storage + RLS) · Vercel
 
 ## Features (MVP)
 
@@ -12,8 +13,12 @@
 | Discovery | 테라피스트 검색 (시술/지역/가격 필터), 프로필 상세, 리뷰/평점 표시 |
 | Booking | 서비스 선택 → 가용 슬롯 캘린더 → 주소/방문메모 입력 → 결제(demo) 4단계 위저드 |
 | Booking 관리 | 예약 내역/상세, 취소(48h/24h 차등 환불 자동계산), 리뷰 작성, 문의/신고 |
-| Therapist Portal | 대시보드(KPI), 예약 수락/거절/완료, 프로필/서비스/가격 편집, 주간 스케줄+휴무, 정산 내역 |
+| Therapist Portal | 대시보드(KPI), 예약 수락/거절/완료, 프로필/서비스/가격 편집, 주간 스케줄+휴무, 정산 내역, 사진 갤러리 업로드 |
 | Admin | KPI 대시보드, 사용자 정지/복구, 예약/결제 모니터링, 리뷰 게시/숨김, 문의 답변, 공지/프로모션 |
+| Map | Leaflet + OpenStreetMap 지도 뷰 (지역별 마커, 리스트/지도 토글) |
+| i18n | EN / العربية(RTL) / 한국어 — 계정 설정에서 즉시 전환, 쿠키+프로필 저장 |
+| Notifications | 예약 상태 변경 시 인앱 알림 (DB 트리거), 미읽음 뱃지, 채널 설정(푸시/이메일/SMS) |
+| Automation | pg_cron — 12시간 무응답 예약 요청 자동 만료 + 전액 환불 (30분 주기) |
 
 ## Booking 상태 흐름
 
@@ -41,8 +46,8 @@ npm run dev
 
 ## Next (v2 backlog)
 
-- 실결제 (Stripe / Telr AED)
-- 지도 뷰 (현재 지역 필터로 대체)
-- 다국어 EN/AR/KO + RTL
-- 푸시/SMS 알림, 예약 타임아웃 자동만료
-- 테라피스트 사진/동영상 업로드 (Supabase Storage)
+- 실결제 (Stripe / Telr AED) — 현재 demo 결제
+- 실제 푸시/이메일/SMS 발송 (현재 인앱 알림 + 채널 설정만)
+- 소개 동영상 업로드
+- 주소 자동완성 (Google Places)
+- 테라피스트 자격증 검수 워크플로우
