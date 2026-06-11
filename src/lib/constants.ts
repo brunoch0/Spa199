@@ -5,6 +5,16 @@ export const SERVICE_TYPES = [
   { value: "thai", label: "Thai" },
   { value: "sports", label: "Sports" },
   { value: "reflexology", label: "Reflexology" },
+  { value: "hot_stone", label: "Hot Stone" },
+  { value: "balinese", label: "Balinese" },
+  { value: "shiatsu", label: "Shiatsu" },
+  { value: "lymphatic", label: "Lymphatic Drainage" },
+  { value: "prenatal", label: "Prenatal" },
+  { value: "head_shoulder", label: "Head & Shoulder" },
+  { value: "korean", label: "Korean Gyeongnak" },
+  { value: "couples", label: "Couples" },
+  { value: "four_hands", label: "Four Hands" },
+  { value: "cupping", label: "Cupping" },
 ] as const;
 
 export const DUBAI_AREAS = [
