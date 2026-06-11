@@ -20,6 +20,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { generateSlots } from "@/lib/slots";
+import { useI18n } from "@/lib/i18n";
 import { serviceLabel, formatAED, DUBAI_AREAS } from "@/lib/constants";
 import type { AvailabilitySlot, Therapist, TherapistService } from "@/lib/types";
 
@@ -29,6 +30,7 @@ export default function BookingPage() {
   const { therapistId } = useParams<{ therapistId: string }>();
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const { dict } = useI18n();
 
   const [therapist, setTherapist] = useState<Therapist | null>(null);
   const [availability, setAvailability] = useState<AvailabilitySlot[]>([]);
@@ -146,7 +148,7 @@ export default function BookingPage() {
       return;
     }
 
-    toast.success("Booking requested! Your therapist will confirm shortly.");
+    toast.success(dict.bookingRequested);
     router.push(`/bookings/${booking.id}`);
   }
 
@@ -186,7 +188,7 @@ export default function BookingPage() {
       {step === "service" && (
         <Card>
           <CardHeader>
-            <CardTitle>Choose a service</CardTitle>
+            <CardTitle>{dict.chooseService}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {therapist.services
@@ -216,7 +218,7 @@ export default function BookingPage() {
         <Card>
           <CardHeader>
             <CardTitle>
-              Pick date & time — {serviceLabel(service.service_type)} {service.duration_min}min
+              {dict.pickDateTime} — {serviceLabel(service.service_type)} {service.duration_min}{dict.min}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -234,11 +236,11 @@ export default function BookingPage() {
             {date && (
               <div>
                 <p className="mb-2 text-sm font-medium">
-                  Available times on {date.toLocaleDateString()}
+                  {dict.availableTimesOn} {date.toLocaleDateString()}
                 </p>
                 {slots.length === 0 ? (
                   <p className="text-sm text-neutral-500">
-                    No available slots this day. Try another date.
+                    {dict.noSlotsThisDay}
                   </p>
                 ) : (
                   <div className="grid grid-cols-4 gap-2">
@@ -258,14 +260,14 @@ export default function BookingPage() {
             )}
             <div className="flex justify-between">
               <Button variant="ghost" onClick={() => setStep("service")}>
-                ← Back
+                {dict.back}
               </Button>
               <Button
                 disabled={!date || !time}
                 onClick={() => setStep("location")}
                 className="bg-emerald-600 hover:bg-emerald-700"
               >
-                Continue
+                {dict.continue}
               </Button>
             </div>
           </CardContent>
@@ -275,11 +277,11 @@ export default function BookingPage() {
       {step === "location" && (
         <Card>
           <CardHeader>
-            <CardTitle>Where should we come?</CardTitle>
+            <CardTitle>{dict.whereShouldWeCome}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="address">Address (hotel / building, room or apt number)</Label>
+              <Label htmlFor="address">{dict.addressLabel}</Label>
               <Input
                 id="address"
                 value={address}
@@ -288,10 +290,10 @@ export default function BookingPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Area</Label>
+              <Label>{dict.area}</Label>
               <Select value={area} onValueChange={setArea}>
                 <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Select area" />
+                  <SelectValue placeholder={dict.selectArea} />
                 </SelectTrigger>
                 <SelectContent>
                   {DUBAI_AREAS.map((a) => (
@@ -303,7 +305,7 @@ export default function BookingPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="notes">Visit notes (entrance, parking, preferences…)</Label>
+              <Label htmlFor="notes">{dict.visitNotesLabel}</Label>
               <Textarea
                 id="notes"
                 value={notes}
@@ -313,14 +315,14 @@ export default function BookingPage() {
             </div>
             <div className="flex justify-between">
               <Button variant="ghost" onClick={() => setStep("time")}>
-                ← Back
+                {dict.back}
               </Button>
               <Button
                 disabled={!address.trim()}
                 onClick={() => setStep("payment")}
                 className="bg-emerald-600 hover:bg-emerald-700"
               >
-                Continue
+                {dict.continue}
               </Button>
             </div>
           </CardContent>
@@ -330,29 +332,29 @@ export default function BookingPage() {
       {step === "payment" && service && date && time && (
         <Card>
           <CardHeader>
-            <CardTitle>Review & pay</CardTitle>
+            <CardTitle>{dict.reviewAndPay}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1 rounded-lg bg-neutral-50 p-4 text-sm">
               <p>
-                <span className="text-neutral-500">Service:</span>{" "}
+                <span className="text-neutral-500">{dict.service}:</span>{" "}
                 {serviceLabel(service.service_type)} · {service.duration_min} min
               </p>
               <p>
-                <span className="text-neutral-500">When:</span> {date.toLocaleDateString()} at {time}
+                <span className="text-neutral-500">{dict.when}:</span> {date.toLocaleDateString()} at {time}
               </p>
               <p>
-                <span className="text-neutral-500">Where:</span> {address}
+                <span className="text-neutral-500">{dict.where}:</span> {address}
                 {area ? ` (${area})` : ""}
               </p>
               <p className="pt-2 text-base font-semibold">
-                Total: <span className="text-emerald-700">{formatAED(service.price_aed)}</span>
+                {dict.total}: <span className="text-emerald-700">{formatAED(service.price_aed)}</span>
               </p>
             </div>
 
             <RadioGroup value={payMethod} onValueChange={setPayMethod} className="space-y-2">
               {[
-                ["card", "Credit / Debit card"],
+                ["card", dict.cardPay],
                 ["apple_pay", "Apple Pay"],
                 ["google_pay", "Google Pay"],
               ].map(([value, label]) => (
@@ -368,20 +370,19 @@ export default function BookingPage() {
             </RadioGroup>
 
             <p className="text-xs text-neutral-500">
-              Free cancellation up to 48h before your session. 50% refund between 48–24h.
-              Demo mode: no real charge is made.
+              {dict.cancelPolicyShort}
             </p>
 
             <div className="flex justify-between">
               <Button variant="ghost" onClick={() => setStep("location")}>
-                ← Back
+                {dict.back}
               </Button>
               <Button
                 disabled={submitting}
                 onClick={confirmBooking}
                 className="bg-emerald-600 hover:bg-emerald-700"
               >
-                {submitting ? "Processing…" : `Pay ${formatAED(service.price_aed)}`}
+                {submitting ? dict.processing : `${dict.pay} ${formatAED(service.price_aed)}`}
               </Button>
             </div>
           </CardContent>

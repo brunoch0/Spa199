@@ -11,12 +11,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SERVICE_TYPES, DUBAI_AREAS } from "@/lib/constants";
+import { useI18n } from "@/lib/i18n";
 
 const ALL = "__all__";
 
 function Filters() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { dict } = useI18n();
 
   function setParam(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -37,7 +39,7 @@ function Filters() {
           <SelectValue placeholder="Treatment" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>All treatments</SelectItem>
+          <SelectItem value={ALL}>{dict.allTreatments}</SelectItem>
           {SERVICE_TYPES.map((s) => (
             <SelectItem key={s.value} value={s.value}>
               {s.label}
@@ -54,7 +56,7 @@ function Filters() {
           <SelectValue placeholder="Area" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>All areas</SelectItem>
+          <SelectItem value={ALL}>{dict.allAreas}</SelectItem>
           {DUBAI_AREAS.map((a) => (
             <SelectItem key={a} value={a}>
               {a}
@@ -71,10 +73,10 @@ function Filters() {
           <SelectValue placeholder="Max price" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>Any price</SelectItem>
+          <SelectItem value={ALL}>{dict.anyPrice}</SelectItem>
           {[199, 250, 300, 400].map((p) => (
             <SelectItem key={p} value={String(p)}>
-              Up to AED {p}
+              {dict.upTo} {p}
             </SelectItem>
           ))}
         </SelectContent>
@@ -82,7 +84,7 @@ function Filters() {
 
       {hasFilters && (
         <Button variant="ghost" size="sm" onClick={() => router.push("/search")}>
-          Clear
+          {dict.clear}
         </Button>
       )}
     </div>

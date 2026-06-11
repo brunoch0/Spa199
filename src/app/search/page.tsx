@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { TherapistCard } from "@/components/therapist-card";
+import { getServerDict } from "@/lib/i18n/server";
 import { SearchFilters } from "@/components/search-filters";
+import { SearchResults } from "@/components/search-results";
 import type { Therapist } from "@/lib/types";
 
 export default async function SearchPage({
@@ -9,7 +10,7 @@ export default async function SearchPage({
   searchParams: Promise<{ service?: string; area?: string; maxPrice?: string }>;
 }) {
   const { service, area, maxPrice } = await searchParams;
-  const supabase = await createClient();
+  const [supabase, { dict }] = await Promise.all([createClient(), getServerDict()]);
 
   let query = supabase
     .from("therapists")
@@ -32,22 +33,12 @@ export default async function SearchPage({
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Find your therapist</h1>
+      <h1 className="text-2xl font-bold">{dict.findYourTherapist}</h1>
       <SearchFilters />
-      <p className="text-sm text-neutral-500">
-        {therapists.length} therapist{therapists.length === 1 ? "" : "s"} available
-        {area ? ` in ${area}` : " in Dubai"}
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {therapists.map((t) => (
-          <TherapistCard key={t.id} therapist={t} />
-        ))}
-      </div>
-      {therapists.length === 0 && (
-        <div className="rounded-xl border bg-white p-10 text-center text-neutral-500">
-          No therapists match these filters. Try widening your search.
-        </div>
-      )}
+      <SearchResults
+        therapists={JSON.parse(JSON.stringify(therapists))}
+        area={area}
+      />
     </div>
   );
 }

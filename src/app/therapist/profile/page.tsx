@@ -18,12 +18,16 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { SERVICE_TYPES, DUBAI_AREAS, serviceLabel, formatAED } from "@/lib/constants";
+import { AvatarUpload } from "@/components/avatar-upload";
+import { PhotoGallery } from "./photo-gallery";
 import type { Therapist, TherapistService } from "@/lib/types";
 
 export default function TherapistProfilePage() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [profileId, setProfileId] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [fullName, setFullName] = useState("");
   const [t, setT] = useState<Therapist | null>(null);
   const [services, setServices] = useState<TherapistService[]>([]);
   const [busy, setBusy] = useState(false);
@@ -39,11 +43,13 @@ export default function TherapistProfilePage() {
       if (!user) return router.push("/login");
       const { data: p } = await supabase
         .from("profiles")
-        .select("id")
+        .select("id, avatar_url, full_name")
         .eq("auth_id", user.id)
         .single();
       if (!p) return;
       setProfileId(p.id);
+      setAvatarUrl(p.avatar_url);
+      setFullName(p.full_name);
       const [{ data: th }, { data: sv }] = await Promise.all([
         supabase.from("therapists").select("*").eq("id", p.id).single(),
         supabase.from("therapist_services").select("*").eq("therapist_id", p.id),
@@ -111,6 +117,29 @@ export default function TherapistProfilePage() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">My profile</h1>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Photos</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {profileId && (
+            <AvatarUpload
+              profileId={profileId}
+              avatarUrl={avatarUrl}
+              fallback={fullName.slice(0, 1)}
+              onUploaded={setAvatarUrl}
+            />
+          )}
+          {profileId && (
+            <PhotoGallery
+              therapistId={profileId}
+              photos={t.photos}
+              onChange={(photos) => setT({ ...t, photos })}
+            />
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>

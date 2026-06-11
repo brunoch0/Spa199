@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { serviceLabel, formatAED } from "@/lib/constants";
+import { ReportReviewButton } from "@/components/report-review-button";
 import type { Review, Therapist } from "@/lib/types";
 
 export default async function TherapistDetailPage({
@@ -73,6 +74,21 @@ export default async function TherapistDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
+          {/* Gallery */}
+          {therapist.photos.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+              {therapist.photos.map((url) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={url}
+                  src={url}
+                  alt={`${therapist.profile?.full_name} gallery`}
+                  className="aspect-square w-full rounded-lg border object-cover"
+                />
+              ))}
+            </div>
+          )}
+
           {/* About */}
           <Card>
             <CardHeader>
@@ -125,8 +141,9 @@ export default async function TherapistDetailPage({
                           <span className="text-neutral-300">{"★".repeat(5 - r.rating)}</span>
                         </p>
                       </div>
-                      <span className="ml-auto text-xs text-neutral-400">
+                      <span className="ms-auto flex items-center gap-2 text-xs text-neutral-400">
                         {new Date(r.created_at).toLocaleDateString()}
+                        <ReportReviewButton reviewId={r.id} />
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-neutral-700">{r.comment}</p>

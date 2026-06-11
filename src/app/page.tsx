@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { getServerDict } from "@/lib/i18n/server";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,10 +8,8 @@ import { TherapistCard } from "@/components/therapist-card";
 import { SERVICE_TYPES } from "@/lib/constants";
 import type { Therapist } from "@/lib/types";
 
-export const revalidate = 60;
-
 export default async function HomePage() {
-  const supabase = await createClient();
+  const [supabase, { dict }] = await Promise.all([createClient(), getServerDict()]);
 
   const [{ data: therapists }, { data: notices }] = await Promise.all([
     supabase
@@ -32,20 +31,17 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 px-6 py-12 text-white sm:px-10">
         <h1 className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl">
-          Hotel-quality massage,
+          {dict.heroTitle1}
           <br />
-          delivered to your door in Dubai
+          {dict.heroTitle2}
         </h1>
-        <p className="mt-3 max-w-md text-emerald-50">
-          Certified therapists, transparent reviews, upfront prices.
-          From AED 199 — at your hotel, home or office.
-        </p>
+        <p className="mt-3 max-w-md text-emerald-50">{dict.heroSubtitle}</p>
         <div className="mt-6 flex gap-3">
           <Button asChild size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50">
-            <Link href="/search">Book now</Link>
+            <Link href="/search">{dict.bookNow}</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white">
-            <Link href="/signup?role=therapist">Join as therapist</Link>
+            <Link href="/signup?role=therapist">{dict.joinAsTherapist}</Link>
           </Button>
         </div>
       </section>
@@ -71,7 +67,7 @@ export default async function HomePage() {
 
       {/* Service types */}
       <section>
-        <h2 className="mb-3 text-xl font-semibold">Browse by treatment</h2>
+        <h2 className="mb-3 text-xl font-semibold">{dict.browseByTreatment}</h2>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
           {SERVICE_TYPES.map((s) => (
             <Link
@@ -88,9 +84,9 @@ export default async function HomePage() {
       {/* Top therapists */}
       <section>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Top-rated therapists</h2>
+          <h2 className="text-xl font-semibold">{dict.topRatedTherapists}</h2>
           <Button asChild variant="link" className="text-emerald-700">
-            <Link href="/search">View all →</Link>
+            <Link href="/search">{dict.viewAll}</Link>
           </Button>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -102,12 +98,12 @@ export default async function HomePage() {
 
       {/* How it works */}
       <section className="rounded-2xl border bg-white p-6">
-        <h2 className="mb-4 text-xl font-semibold">How it works</h2>
+        <h2 className="mb-4 text-xl font-semibold">{dict.howItWorks}</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            ["1. Choose", "Browse verified profiles, real reviews and upfront prices."],
-            ["2. Book", "Pick a time slot, enter your hotel or home address, pay securely."],
-            ["3. Relax", "Your therapist arrives with everything needed. Just unwind."],
+            [dict.step1Title, dict.step1Desc],
+            [dict.step2Title, dict.step2Desc],
+            [dict.step3Title, dict.step3Desc],
           ].map(([title, desc]) => (
             <div key={title}>
               <p className="font-semibold text-emerald-700">{title}</p>

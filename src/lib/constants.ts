@@ -23,6 +23,23 @@ export const DUBAI_AREAS = [
   "Festival City",
 ] as const;
 
+// approximate centre coordinates for map view
+export const AREA_COORDS: Record<string, [number, number]> = {
+  "Dubai Marina": [25.0805, 55.1403],
+  JBR: [25.0752, 55.1338],
+  "Palm Jumeirah": [25.1124, 55.139],
+  "Downtown Dubai": [25.1972, 55.2744],
+  "Business Bay": [25.1851, 55.2666],
+  DIFC: [25.2138, 55.2824],
+  "City Walk": [25.2048, 55.2622],
+  Jumeirah: [25.2191, 55.2531],
+  "Umm Suqeim": [25.1564, 55.2046],
+  "Media City": [25.0926, 55.1556],
+  Bluewaters: [25.0792, 55.1206],
+  Deira: [25.2697, 55.3094],
+  "Festival City": [25.2222, 55.3522],
+};
+
 export const REVIEW_TAGS = [
   "professional",
   "punctual",
