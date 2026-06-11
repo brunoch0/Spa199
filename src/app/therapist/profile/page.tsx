@@ -130,6 +130,7 @@ export default function TherapistProfilePage() {
               avatarUrl={avatarUrl}
               fallback={fullName.slice(0, 1)}
               onUploaded={setAvatarUrl}
+              requiresReview
             />
           )}
           {profileId && (

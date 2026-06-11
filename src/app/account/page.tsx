@@ -104,6 +104,7 @@ export default function AccountPage() {
             profileId={profile.id}
             avatarUrl={profile.avatar_url}
             fallback={profile.full_name.slice(0, 1)}
+            requiresReview={profile.role === "therapist"}
           />
           <form onSubmit={save} className="space-y-4">
             <div className="space-y-2">

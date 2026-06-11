@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { serviceLabel, formatAED } from "@/lib/constants";
 import { ReportReviewButton } from "@/components/report-review-button";
+import { ZoomablePhoto, PhotoGrid } from "@/components/zoomable-photo";
 import type { Review, Therapist } from "@/lib/types";
 
 export default async function TherapistDetailPage({
@@ -41,12 +42,20 @@ export default async function TherapistDetailPage({
       {/* Header */}
       <Card>
         <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center">
-          <Avatar className="size-24">
-            <AvatarImage src={therapist.profile?.avatar_url ?? undefined} />
-            <AvatarFallback className="text-2xl">
-              {therapist.profile?.full_name?.slice(0, 1)}
-            </AvatarFallback>
-          </Avatar>
+          {therapist.profile?.avatar_url ? (
+            <ZoomablePhoto
+              url={therapist.profile.avatar_url}
+              alt={therapist.profile.full_name}
+              label={therapist.profile.full_name}
+              className="size-24 rounded-full border object-cover"
+            />
+          ) : (
+            <Avatar className="size-24">
+              <AvatarFallback className="text-2xl">
+                {therapist.profile?.full_name?.slice(0, 1)}
+              </AvatarFallback>
+            </Avatar>
+          )}
           <div className="flex-1">
             <h1 className="text-2xl font-bold">{therapist.profile?.full_name}</h1>
             <p className="text-neutral-500">
@@ -74,19 +83,16 @@ export default async function TherapistDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          {/* Gallery */}
+          {/* Gallery — click to enlarge */}
           {therapist.photos.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {therapist.photos.map((url) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={url}
-                  src={url}
-                  alt={`${therapist.profile?.full_name} gallery`}
-                  className="aspect-square w-full rounded-lg border object-cover"
-                />
-              ))}
-            </div>
+            <PhotoGrid
+              photos={therapist.photos.map((url, i) => ({
+                url,
+                label: `${therapist.profile?.full_name} · Gallery ${i + 1}`,
+              }))}
+              gridClassName="grid grid-cols-3 gap-2 sm:grid-cols-6"
+              itemClassName="aspect-square w-full rounded-lg border object-cover"
+            />
           )}
 
           {/* About */}
@@ -175,10 +181,10 @@ export default async function TherapistDetailPage({
             {therapist.services?.sort((a, b) => Number(a.price_aed) - Number(b.price_aed)).map((s) => (
               <div key={s.id} className="flex items-center gap-3 rounded-lg border p-3">
                 {s.photo_url && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={s.photo_url}
+                  <ZoomablePhoto
+                    url={s.photo_url}
                     alt={serviceLabel(s.service_type)}
+                    label={`${serviceLabel(s.service_type)} · ${s.duration_min} min`}
                     className="size-12 shrink-0 rounded-lg border object-cover"
                   />
                 )}

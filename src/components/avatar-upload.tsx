@@ -11,16 +11,19 @@ export function AvatarUpload({
   avatarUrl,
   fallback,
   onUploaded,
+  requiresReview = false,
 }: {
   profileId: string;
   avatarUrl: string | null;
   fallback: string;
   onUploaded?: (url: string) => void;
+  requiresReview?: boolean;
 }) {
   const supabase = createClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [url, setUrl] = useState(avatarUrl);
   const [busy, setBusy] = useState(false);
+  const [inReview, setInReview] = useState(false);
 
   async function upload(file: File) {
     setBusy(true);
@@ -38,6 +41,18 @@ export function AvatarUpload({
 
     const { data } = supabase.storage.from("media").getPublicUrl(path);
     const publicUrl = data.publicUrl;
+
+    if (requiresReview) {
+      // therapist photos go through admin moderation; current avatar stays until approved
+      const { error: reviewError } = await supabase
+        .from("media_reviews")
+        .insert({ therapist_id: profileId, url: publicUrl, kind: "avatar" });
+      setBusy(false);
+      if (reviewError) return toast.error(reviewError.message);
+      setInReview(true);
+      toast.success("Photo submitted for review — it goes live once approved.");
+      return;
+    }
 
     const { error: updateError } = await supabase
       .from("profiles")
@@ -79,7 +94,15 @@ export function AvatarUpload({
         >
           {busy ? "Uploading…" : "Change photo"}
         </Button>
-        <p className="mt-1 text-xs text-neutral-500">JPG/PNG, max 5MB</p>
+        <p className="mt-1 text-xs text-neutral-500">
+          JPG/PNG, max 5MB
+          {requiresReview && " · reviewed before going live"}
+        </p>
+        {inReview && (
+          <p className="mt-1 text-xs font-medium text-amber-600">
+            ⏳ New photo in review — your current photo stays until it&apos;s approved.
+          </p>
+        )}
       </div>
     </div>
   );
