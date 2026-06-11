@@ -46,6 +46,7 @@ export default function BookingPage() {
   const [notes, setNotes] = useState("");
   const [payMethod, setPayMethod] = useState("card");
   const [submitting, setSubmitting] = useState(false);
+  const [isFirstBooking, setIsFirstBooking] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -68,6 +69,23 @@ export default function BookingPage() {
       setAvailability((avail as AvailabilitySlot[]) ?? []);
       setBusy(busySlots ?? []);
       setExceptions((exc ?? []).map((e: { date: string }) => e.date));
+
+      // launch promo: 20% off the first booking
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: me } = await supabase
+          .from("profiles")
+          .select("id")
+          .eq("auth_id", user.id)
+          .single();
+        if (me) {
+          const { count } = await supabase
+            .from("bookings")
+            .select("id", { count: "exact", head: true })
+            .eq("customer_id", me.id);
+          setIsFirstBooking((count ?? 0) === 0);
+        }
+      }
     }
     load();
   }, [supabase, therapistId]);
@@ -83,6 +101,11 @@ export default function BookingPage() {
       exceptions.includes(dateStr)
     );
   }, [date, service, availability, busy, exceptions]);
+
+  const promoRate = isFirstBooking ? 0.2 : 0;
+  const finalPrice = service
+    ? Math.round(Number(service.price_aed) * (1 - promoRate))
+    : 0;
 
   async function confirmBooking() {
     if (!service || !date || !time || !address) return;
@@ -116,7 +139,7 @@ export default function BookingPage() {
         service_id: service.id,
         service_type: service.service_type,
         duration_min: service.duration_min,
-        price_aed: service.price_aed,
+        price_aed: finalPrice,
         booking_date: date.toISOString().slice(0, 10),
         start_time: time,
         end_time: endTime,
@@ -137,7 +160,7 @@ export default function BookingPage() {
     // demo payment (real PSP integration comes later)
     const { error: payError } = await supabase.from("payments").insert({
       booking_id: booking.id,
-      amount_aed: service.price_aed,
+      amount_aed: finalPrice,
       method: payMethod,
       status: "paid",
     });
@@ -355,8 +378,20 @@ export default function BookingPage() {
                 <span className="text-neutral-500">{dict.where}:</span> {address}
                 {area ? ` (${area})` : ""}
               </p>
+              {isFirstBooking && (
+                <p className="flex justify-between text-[var(--text-gold)]">
+                  <span>🎁 {dict.firstBookingPromo}</span>
+                  <span>−{formatAED(Number(service.price_aed) - finalPrice)}</span>
+                </p>
+              )}
               <p className="pt-2 text-base font-semibold">
-                {dict.total}: <span className="text-[var(--text-gold)]">{formatAED(service.price_aed)}</span>
+                {dict.total}:{" "}
+                {isFirstBooking && (
+                  <span className="me-2 text-sm font-normal text-neutral-400 line-through">
+                    {formatAED(service.price_aed)}
+                  </span>
+                )}
+                <span className="text-[var(--text-gold)]">{formatAED(finalPrice)}</span>
               </p>
             </div>
 
@@ -390,7 +425,7 @@ export default function BookingPage() {
                 onClick={confirmBooking}
                
               >
-                {submitting ? dict.processing : `${dict.pay} ${formatAED(service.price_aed)}`}
+                {submitting ? dict.processing : `${dict.pay} ${formatAED(finalPrice)}`}
               </Button>
             </div>
           </CardContent>

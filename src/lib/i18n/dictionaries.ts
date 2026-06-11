@@ -1,9 +1,10 @@
-export type Locale = "en" | "ar" | "ko";
+export type Locale = "en" | "ar" | "ko" | "th";
 
 export const LOCALES: { value: Locale; label: string }[] = [
   { value: "en", label: "English" },
   { value: "ar", label: "العربية" },
   { value: "ko", label: "한국어" },
+  { value: "th", label: "ไทย" },
 ];
 
 const en = {
@@ -112,6 +113,9 @@ const en = {
   // notifications page
   noNotifications: "You're all caught up — no notifications.",
   markAllRead: "Mark all as read",
+
+  // promo
+  firstBookingPromo: "First booking promo −20%",
 };
 
 const ar: typeof en = {
@@ -212,6 +216,8 @@ const ar: typeof en = {
 
   noNotifications: "لا توجد إشعارات جديدة.",
   markAllRead: "تحديد الكل كمقروء",
+
+  firstBookingPromo: "خصم 20% على الحجز الأول",
 };
 
 const ko: typeof en = {
@@ -312,10 +318,115 @@ const ko: typeof en = {
 
   noNotifications: "새 알림이 없습니다.",
   markAllRead: "모두 읽음 처리",
+
+  firstBookingPromo: "첫 예약 프로모 −20%",
+};
+
+
+const th: typeof en = {
+  findTherapist: "ค้นหานักบำบัด",
+  myBookings: "การจองของฉัน",
+  login: "เข้าสู่ระบบ",
+  signup: "สมัครสมาชิก",
+  notifications: "การแจ้งเตือน",
+
+  heroTitle1: "สปาระดับโรงแรม",
+  heroTitle2: "ส่งตรงถึงหน้าประตูคุณในดูไบ",
+  heroSubtitle:
+    "นักบำบัดที่ผ่านการรับรอง รีวิวโปร่งใส ราคาชัดเจน เริ่มต้นที่ 199 AED — ที่โรงแรม บ้าน หรือออฟฟิศของคุณ",
+  bookNow: "จองเลย",
+  joinAsTherapist: "ร่วมงานกับเรา (นักบำบัด)",
+  browseByTreatment: "เลือกตามประเภททรีตเมนต์",
+  topRatedTherapists: "นักบำบัดยอดนิยม",
+  viewAll: "ดูทั้งหมด →",
+  howItWorks: "ขั้นตอนการใช้งาน",
+  step1Title: "1. เลือก",
+  step1Desc: "เลือกดูโปรไฟล์ที่ผ่านการตรวจสอบ รีวิวจริง และราคาที่ชัดเจน",
+  step2Title: "2. จอง",
+  step2Desc: "เลือกเวลา กรอกที่อยู่โรงแรมหรือบ้าน แล้วชำระเงินอย่างปลอดภัย",
+  step3Title: "3. ผ่อนคลาย",
+  step3Desc: "นักบำบัดมาพร้อมอุปกรณ์ครบ คุณแค่พักผ่อน",
+
+  findYourTherapist: "ค้นหานักบำบัดของคุณ",
+  allTreatments: "ทรีตเมนต์ทั้งหมด",
+  allAreas: "ทุกพื้นที่",
+  anyPrice: "ทุกช่วงราคา",
+  upTo: "ไม่เกิน AED",
+  clear: "ล้าง",
+  therapistsAvailable: "นักบำบัดพร้อมให้บริการ",
+  inDubai: "ในดูไบ",
+  noTherapistsMatch: "ไม่พบนักบำบัดตามเงื่อนไขนี้ ลองขยายการค้นหา",
+  listView: "รายการ",
+  mapView: "แผนที่",
+  from: "เริ่มต้น",
+
+  about: "เกี่ยวกับ",
+  certifications: "ใบรับรอง",
+  serviceAreas: "พื้นที่ให้บริการ",
+  reviews: "รีวิว",
+  noReviewsYet: "ยังไม่มีรีวิว",
+  servicesPrices: "บริการและราคา",
+  yearsExperience: "ปีประสบการณ์",
+  min: "นาที",
+  report: "รายงาน",
+
+  chooseService: "เลือกบริการ",
+  pickDateTime: "เลือกวันและเวลา",
+  availableTimesOn: "เวลาว่างวันที่",
+  noSlotsThisDay: "วันนี้ไม่มีเวลาว่าง ลองวันอื่น",
+  back: "← ย้อนกลับ",
+  continue: "ถัดไป",
+  whereShouldWeCome: "ให้เราไปที่ไหน?",
+  addressLabel: "ที่อยู่ (โรงแรม/อาคาร หมายเลขห้อง)",
+  area: "พื้นที่",
+  selectArea: "เลือกพื้นที่",
+  visitNotesLabel: "หมายเหตุ (ทางเข้า ที่จอดรถ ความต้องการพิเศษ…)",
+  reviewAndPay: "ตรวจสอบและชำระเงิน",
+  service: "บริการ",
+  when: "เวลา",
+  where: "สถานที่",
+  total: "รวม",
+  cardPay: "บัตรเครดิต / เดบิต",
+  cancelPolicyShort:
+    "ยกเลิกฟรีก่อนเริ่ม 48 ชม. คืนเงิน 50% ระหว่าง 48–24 ชม. โหมดทดสอบ: ไม่มีการเรียกเก็บเงินจริง",
+  pay: "ชำระ",
+  processing: "กำลังดำเนินการ…",
+  bookingRequested: "ส่งคำขอจองแล้ว! นักบำบัดจะยืนยันเร็วๆ นี้",
+
+  noBookingsYet: "ยังไม่มีการจอง",
+  withTherapist: "กับ",
+  cancelBooking: "ยกเลิกการจอง",
+  writeReview: "เขียนรีวิว",
+  contactSupport: "ติดต่อฝ่ายบริการ",
+  totalPaid: "ยอดชำระ",
+  refunded: "คืนเงินแล้ว",
+  notes: "หมายเหตุ",
+  viewProfile: "ดูโปรไฟล์",
+  supportRequests: "คำร้องของฉัน",
+
+  accountSettings: "ตั้งค่าบัญชี",
+  profile: "โปรไฟล์",
+  fullName: "ชื่อ-นามสกุล",
+  email: "อีเมล",
+  phone: "โทรศัพท์",
+  language: "ภาษา",
+  saveChanges: "บันทึก",
+  saving: "กำลังบันทึก…",
+  logout: "ออกจากระบบ",
+  signedInAs: "เข้าสู่ระบบเป็น",
+  notificationChannels: "ช่องทางการแจ้งเตือน",
+  pushNotif: "การแจ้งเตือนแบบพุช",
+  emailNotif: "อีเมล",
+  smsNotif: "SMS",
+
+  noNotifications: "ไม่มีการแจ้งเตือนใหม่",
+  markAllRead: "อ่านทั้งหมดแล้ว",
+
+  firstBookingPromo: "โปรจองครั้งแรก ลด 20%",
 };
 
 export type Dict = typeof en;
-export const DICTIONARIES: Record<Locale, Dict> = { en, ar, ko };
+export const DICTIONARIES: Record<Locale, Dict> = { en, ar, ko, th };
 
 export function getDict(locale: string): Dict {
   return DICTIONARIES[(locale as Locale) in DICTIONARIES ? (locale as Locale) : "en"];

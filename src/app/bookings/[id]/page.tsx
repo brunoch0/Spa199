@@ -118,11 +118,21 @@ export default async function BookingDetailPage({
         </CardContent>
       </Card>
 
-      <BookingActions
-        booking={JSON.parse(JSON.stringify(b))}
-        hasReview={!!review}
-        profileId={profile.id}
-      />
+      <div className="flex flex-wrap items-center gap-2">
+        <BookingActions
+          booking={JSON.parse(JSON.stringify(b))}
+          hasReview={!!review}
+          profileId={profile.id}
+        />
+        {["completed", "cancelled", "rejected", "expired"].includes(b.status) && (
+          <Link
+            href={`/book/${b.therapist_id}`}
+            className="inline-flex h-9 items-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition hover:bg-[var(--action-gold-hover)]"
+          >
+            Book again ↻
+          </Link>
+        )}
+      </div>
 
       {inquiries && inquiries.length > 0 && (
         <Card>
