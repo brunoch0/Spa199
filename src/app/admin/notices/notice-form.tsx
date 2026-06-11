@@ -64,7 +64,7 @@ export function NoticeForm() {
         <Button
           disabled={busy || !title.trim()}
           onClick={publish}
-          className="bg-emerald-600 hover:bg-emerald-700"
+         
         >
           {busy ? "Publishing…" : "Publish"}
         </Button>

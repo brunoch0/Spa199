@@ -27,32 +27,72 @@ export async function SiteHeader() {
         : "/";
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-white/90 backdrop-blur">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
-        <Link href={homeByRole} className="text-lg font-bold tracking-tight">
-          spa<span className="text-emerald-600">199</span>
+    <header
+      className="sticky top-0 z-40 border-b"
+      style={{ background: "var(--onyx-950)", borderColor: "var(--border-on-dark)" }}
+    >
+      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4">
+        {/* Brand wordmark — serif gold numeral + wide-tracked caps */}
+        <Link href={homeByRole} className="flex items-baseline gap-2">
+          <span
+            className="font-display leading-none"
+            style={{ color: "var(--gold-300)", fontSize: 27, fontWeight: 600 }}
+          >
+            199
+          </span>
+          <span
+            className="uppercase"
+            style={{
+              color: "var(--gold-200)",
+              fontSize: 11,
+              fontWeight: 500,
+              letterSpacing: "0.34em",
+            }}
+          >
+            Spa&nbsp;Dubai
+          </span>
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2">
           {(!profile || profile.role === "customer") && (
             <>
-              <Button asChild variant="ghost" size="sm">
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-[var(--text-on-dark-muted)] hover:bg-white/5 hover:text-[var(--gold-200)]"
+              >
                 <Link href="/search">{dict.findTherapist}</Link>
               </Button>
               {profile && (
-                <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
+                <Button
+                  asChild
+                  variant="ghost"
+                  size="sm"
+                  className="hidden text-[var(--text-on-dark-muted)] hover:bg-white/5 hover:text-[var(--gold-200)] sm:inline-flex"
+                >
                   <Link href="/bookings">{dict.myBookings}</Link>
                 </Button>
               )}
             </>
           )}
           {profile?.role === "therapist" && (
-            <Button asChild variant="ghost" size="sm">
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="text-[var(--text-on-dark-muted)] hover:bg-white/5 hover:text-[var(--gold-200)]"
+            >
               <Link href="/therapist/bookings">Bookings</Link>
             </Button>
           )}
           {profile?.role === "admin" && (
-            <Button asChild variant="ghost" size="sm">
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className="text-[var(--text-on-dark-muted)] hover:bg-white/5 hover:text-[var(--gold-200)]"
+            >
               <Link href="/admin">Dashboard</Link>
             </Button>
           )}
@@ -60,7 +100,7 @@ export async function SiteHeader() {
           {profile && (
             <Link
               href="/notifications"
-              className="relative rounded-lg p-2 text-neutral-600 transition hover:bg-neutral-100"
+              className="relative rounded-lg p-2 text-[var(--text-on-dark-muted)] transition hover:bg-white/5 hover:text-[var(--gold-200)]"
               aria-label={dict.notifications}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -68,7 +108,10 @@ export async function SiteHeader() {
                 <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
               </svg>
               {unread > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                <span
+                  className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full text-[10px] font-bold"
+                  style={{ background: "var(--gold-400)", color: "var(--onyx-950)" }}
+                >
                   {unread > 9 ? "9+" : unread}
                 </span>
               )}
@@ -77,17 +120,22 @@ export async function SiteHeader() {
 
           {profile ? (
             <Link href="/account" className="ml-1">
-              <Avatar className="size-8">
+              <Avatar className="size-8 ring-1 ring-[var(--border-on-dark)]">
                 <AvatarImage src={profile.avatar_url ?? undefined} />
                 <AvatarFallback>{profile.full_name.slice(0, 1)}</AvatarFallback>
               </Avatar>
             </Link>
           ) : (
             <>
-              <Button asChild variant="ghost" size="sm">
+              <Button
+                asChild
+                variant="ghost"
+                size="sm"
+                className="text-[var(--text-on-dark-muted)] hover:bg-white/5 hover:text-[var(--gold-200)]"
+              >
                 <Link href="/login">{dict.login}</Link>
               </Button>
-              <Button asChild size="sm" className="bg-emerald-600 hover:bg-emerald-700">
+              <Button asChild size="sm">
                 <Link href="/signup">{dict.signup}</Link>
               </Button>
             </>

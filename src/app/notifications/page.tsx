@@ -38,9 +38,9 @@ export default async function NotificationsPage() {
 
       {notifications?.map((n) => (
         <Link key={n.id} href={n.link ?? "#"} className="block">
-          <Card className={`transition hover:border-emerald-400 ${n.read ? "opacity-60" : "border-emerald-200"}`}>
+          <Card className={`transition hover:border-[var(--gold-400)] ${n.read ? "opacity-60" : "border-[var(--gold-200)]"}`}>
             <CardContent className="flex items-start gap-3 p-4">
-              {!n.read && <span className="mt-1.5 size-2 shrink-0 rounded-full bg-emerald-500" />}
+              {!n.read && <span className="mt-1.5 size-2 shrink-0 rounded-full bg-[var(--gold-400)]" />}
               <div className={n.read ? "ps-5" : ""}>
                 <p className="font-medium">{n.title}</p>
                 <p className="text-sm text-neutral-600">{n.body}</p>

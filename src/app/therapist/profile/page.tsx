@@ -190,7 +190,7 @@ export default function TherapistProfilePage() {
                   <Badge
                     key={s.value}
                     variant={t.specialties.includes(s.value) ? "default" : "outline"}
-                    className={`cursor-pointer ${t.specialties.includes(s.value) ? "bg-emerald-600" : ""}`}
+                    className={`cursor-pointer ${t.specialties.includes(s.value) ? "" : ""}`}
                     onClick={() => toggleArrayItem("specialties", s.value)}
                   >
                     {s.label}
@@ -206,7 +206,7 @@ export default function TherapistProfilePage() {
                   <Badge
                     key={a}
                     variant={t.service_areas.includes(a) ? "default" : "outline"}
-                    className={`cursor-pointer ${t.service_areas.includes(a) ? "bg-emerald-600" : ""}`}
+                    className={`cursor-pointer ${t.service_areas.includes(a) ? "" : ""}`}
                     onClick={() => toggleArrayItem("service_areas", a)}
                   >
                     {a}
@@ -215,7 +215,7 @@ export default function TherapistProfilePage() {
               </div>
             </div>
 
-            <Button type="submit" disabled={busy} className="bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={busy}>
               {busy ? "Saving…" : "Save profile"}
             </Button>
           </form>
@@ -243,7 +243,7 @@ export default function TherapistProfilePage() {
               )}
               <p className="flex-1">
                 {serviceLabel(s.service_type)} · {s.duration_min} min ·{" "}
-                <span className="font-semibold text-emerald-700">{formatAED(s.price_aed)}</span>
+                <span className="font-semibold text-[var(--text-gold)]">{formatAED(s.price_aed)}</span>
               </p>
               <Button
                 size="sm"

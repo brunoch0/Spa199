@@ -36,7 +36,7 @@ export function SearchResults({
           <Button
             size="sm"
             variant={view === "list" ? "default" : "ghost"}
-            className={view === "list" ? "bg-emerald-600 hover:bg-emerald-700" : ""}
+            
             onClick={() => setView("list")}
           >
             {dict.listView}
@@ -44,7 +44,7 @@ export function SearchResults({
           <Button
             size="sm"
             variant={view === "map" ? "default" : "ghost"}
-            className={view === "map" ? "bg-emerald-600 hover:bg-emerald-700" : ""}
+            
             onClick={() => setView("map")}
           >
             {dict.mapView}

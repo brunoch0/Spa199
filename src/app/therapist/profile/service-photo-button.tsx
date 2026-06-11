@@ -81,7 +81,7 @@ export function ServicePhotoButton({
           onClick={() => inputRef.current?.click()}
           disabled={busy}
           title="Add menu photo"
-          className="flex size-12 shrink-0 items-center justify-center rounded-lg border-2 border-dashed text-lg text-neutral-400 transition hover:border-emerald-400 hover:text-emerald-600"
+          className="flex size-12 shrink-0 items-center justify-center rounded-lg border-2 border-dashed text-lg text-neutral-400 transition hover:border-[var(--gold-400)] hover:text-[var(--text-gold)]"
         >
           {busy ? "…" : "📷"}
         </button>

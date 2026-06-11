@@ -38,7 +38,7 @@ export default async function AdminUsersPage() {
                 <TableCell className="font-medium">{p.full_name}</TableCell>
                 <TableCell className="text-neutral-500">{p.email}</TableCell>
                 <TableCell>
-                  <Badge variant={p.role === "therapist" ? "default" : "secondary"} className={p.role === "therapist" ? "bg-emerald-600" : ""}>
+                  <Badge variant={p.role === "therapist" ? "default" : "secondary"} className={p.role === "therapist" ? "" : ""}>
                     {p.role}
                   </Badge>
                 </TableCell>

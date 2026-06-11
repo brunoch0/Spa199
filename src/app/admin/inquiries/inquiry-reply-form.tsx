@@ -38,7 +38,7 @@ export function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
         rows={2}
         className="flex-1"
       />
-      <Button disabled={busy || !reply.trim()} onClick={resolve} className="self-end bg-emerald-600 hover:bg-emerald-700">
+      <Button disabled={busy || !reply.trim()} onClick={resolve} className="self-end">
         {busy ? "…" : "Reply & resolve"}
       </Button>
     </div>

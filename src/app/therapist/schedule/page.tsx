@@ -180,7 +180,7 @@ export default function SchedulePage() {
             <Button
               onClick={addDayOff}
               disabled={!offDate}
-              className="mt-2 w-full bg-emerald-600 hover:bg-emerald-700"
+              className="mt-2 w-full"
             >
               Add day off
             </Button>

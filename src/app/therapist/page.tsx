@@ -49,7 +49,7 @@ export default async function TherapistDashboard() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map((s) => (
           <Link key={s.label} href={s.href}>
-            <Card className="transition hover:border-emerald-400">
+            <Card className="transition hover:border-[var(--gold-400)]">
               <CardContent className="p-4">
                 <p className="text-xs text-neutral-500">{s.label}</p>
                 <p className="mt-1 text-lg font-bold">{s.value}</p>

@@ -52,7 +52,7 @@ export default async function TherapistDetailPage({
             <p className="text-neutral-500">
               {therapist.base_area} · {therapist.experience_years} years experience
             </p>
-            <p className="mt-1 font-medium text-amber-600">
+            <p className="mt-1 font-medium text-[var(--gold-500)]">
               ★ {Number(therapist.rating_avg).toFixed(1)}{" "}
               <span className="font-normal text-neutral-400">
                 ({therapist.rating_count} reviews)
@@ -66,7 +66,7 @@ export default async function TherapistDetailPage({
               ))}
             </div>
           </div>
-          <Button asChild size="lg" className="bg-emerald-600 hover:bg-emerald-700">
+          <Button asChild size="lg">
             <Link href={`/book/${therapist.id}`}>Book now</Link>
           </Button>
         </CardContent>
@@ -136,7 +136,7 @@ export default async function TherapistDetailPage({
                       </Avatar>
                       <div>
                         <p className="text-sm font-medium">{r.customer?.full_name}</p>
-                        <p className="text-xs text-amber-600">
+                        <p className="text-xs text-[var(--gold-500)]">
                           {"★".repeat(r.rating)}
                           <span className="text-neutral-300">{"★".repeat(5 - r.rating)}</span>
                         </p>
@@ -186,10 +186,10 @@ export default async function TherapistDetailPage({
                   <p className="font-medium">{serviceLabel(s.service_type)}</p>
                   <p className="text-sm text-neutral-500">{s.duration_min} min</p>
                 </div>
-                <p className="font-semibold text-emerald-700">{formatAED(s.price_aed)}</p>
+                <p className="font-semibold text-[var(--text-gold)]">{formatAED(s.price_aed)}</p>
               </div>
             ))}
-            <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700">
+            <Button asChild className="w-full">
               <Link href={`/book/${therapist.id}`}>Book now</Link>
             </Button>
           </CardContent>

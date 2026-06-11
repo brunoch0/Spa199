@@ -77,7 +77,7 @@ export default async function EarningsPage() {
                   </TableCell>
                   <TableCell>{b.area ?? "—"}</TableCell>
                   <TableCell className="text-right">{formatAED(b.price_aed)}</TableCell>
-                  <TableCell className="text-right font-medium text-emerald-700">
+                  <TableCell className="text-right font-medium text-[var(--text-gold)]">
                     {formatAED(Math.round(Number(b.price_aed) * (1 - PLATFORM_FEE_PCT / 100)))}
                   </TableCell>
                 </TableRow>

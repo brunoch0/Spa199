@@ -19,7 +19,7 @@ export default async function AdminNoticesPage() {
           <CardContent className="flex items-start justify-between gap-4 p-4">
             <div>
               <div className="flex items-center gap-2">
-                <Badge variant={n.type === "promotion" ? "default" : "secondary"} className={n.type === "promotion" ? "bg-emerald-600" : ""}>
+                <Badge variant={n.type === "promotion" ? "default" : "secondary"} className={n.type === "promotion" ? "" : ""}>
                   {n.type}
                 </Badge>
                 <p className="font-medium">{n.title}</p>

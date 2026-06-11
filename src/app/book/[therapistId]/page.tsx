@@ -180,7 +180,7 @@ export default function BookingPage() {
         {steps.map((s, i) => (
           <div
             key={s}
-            className={`h-1.5 flex-1 rounded-full ${i <= stepIdx ? "bg-emerald-600" : "bg-neutral-200"}`}
+            className={`h-1.5 flex-1 rounded-full ${i <= stepIdx ? "bg-[var(--gold-500)]" : "bg-neutral-200"}`}
           />
         ))}
       </div>
@@ -201,7 +201,7 @@ export default function BookingPage() {
                     setTime(null);
                     setStep("time");
                   }}
-                  className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition hover:border-emerald-400 ${service?.id === s.id ? "border-emerald-500 bg-emerald-50" : ""}`}
+                  className={`flex w-full items-center gap-3 rounded-lg border p-4 text-left transition hover:border-[var(--gold-400)] ${service?.id === s.id ? "border-[var(--gold-500)] bg-[var(--gold-50)]" : ""}`}
                 >
                   {s.photo_url && (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -215,7 +215,7 @@ export default function BookingPage() {
                     <p className="font-medium">{serviceLabel(s.service_type)}</p>
                     <p className="text-sm text-neutral-500">{s.duration_min} min</p>
                   </div>
-                  <p className="font-semibold text-emerald-700">{formatAED(s.price_aed)}</p>
+                  <p className="font-semibold text-[var(--text-gold)]">{formatAED(s.price_aed)}</p>
                 </button>
               ))}
           </CardContent>
@@ -256,7 +256,7 @@ export default function BookingPage() {
                       <Button
                         key={s}
                         variant={time === s ? "default" : "outline"}
-                        className={time === s ? "bg-emerald-600 hover:bg-emerald-700" : ""}
+                        
                         onClick={() => setTime(s)}
                       >
                         {s}
@@ -273,7 +273,7 @@ export default function BookingPage() {
               <Button
                 disabled={!date || !time}
                 onClick={() => setStep("location")}
-                className="bg-emerald-600 hover:bg-emerald-700"
+               
               >
                 {dict.continue}
               </Button>
@@ -328,7 +328,7 @@ export default function BookingPage() {
               <Button
                 disabled={!address.trim()}
                 onClick={() => setStep("payment")}
-                className="bg-emerald-600 hover:bg-emerald-700"
+               
               >
                 {dict.continue}
               </Button>
@@ -356,7 +356,7 @@ export default function BookingPage() {
                 {area ? ` (${area})` : ""}
               </p>
               <p className="pt-2 text-base font-semibold">
-                {dict.total}: <span className="text-emerald-700">{formatAED(service.price_aed)}</span>
+                {dict.total}: <span className="text-[var(--text-gold)]">{formatAED(service.price_aed)}</span>
               </p>
             </div>
 
@@ -369,7 +369,7 @@ export default function BookingPage() {
                 <Label
                   key={value}
                   htmlFor={`pay-${value}`}
-                  className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${payMethod === value ? "border-emerald-500 bg-emerald-50" : ""}`}
+                  className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${payMethod === value ? "border-[var(--gold-500)] bg-[var(--gold-50)]" : ""}`}
                 >
                   <RadioGroupItem value={value} id={`pay-${value}`} />
                   {label}
@@ -388,7 +388,7 @@ export default function BookingPage() {
               <Button
                 disabled={submitting}
                 onClick={confirmBooking}
-                className="bg-emerald-600 hover:bg-emerald-700"
+               
               >
                 {submitting ? dict.processing : `${dict.pay} ${formatAED(service.price_aed)}`}
               </Button>

@@ -38,7 +38,7 @@ export default async function TherapistBookingsPage() {
               <div>
                 <p className="font-medium">
                   {serviceLabel(b.service_type)} · {b.duration_min} min ·{" "}
-                  <span className="text-emerald-700">{formatAED(b.price_aed)}</span>
+                  <span className="text-[var(--text-gold)]">{formatAED(b.price_aed)}</span>
                 </p>
                 <p className="text-sm text-neutral-500">
                   {new Date(b.booking_date).toLocaleDateString()} ·{" "}

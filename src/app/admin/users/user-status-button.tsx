@@ -36,7 +36,7 @@ export function UserStatusButton({
       variant="outline"
       disabled={busy}
       onClick={toggle}
-      className={status === "active" ? "text-red-600" : "text-emerald-600"}
+      className={status === "active" ? "text-red-600" : "text-[var(--text-gold)]"}
     >
       {status === "active" ? "Suspend" : "Reactivate"}
     </Button>

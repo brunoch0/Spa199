@@ -150,7 +150,7 @@ export function BookingActions({
                     {refund.hoursLeft}h until your session. Based on our policy you will be
                     refunded:
                   </p>
-                  <p className="text-lg font-semibold text-emerald-700">
+                  <p className="text-lg font-semibold text-[var(--text-gold)]">
                     {formatAED(refund.refundAed)}{" "}
                     <span className="text-sm font-normal text-neutral-500">
                       ({refund.ratePct}% of {formatAED(booking.price_aed)})
@@ -178,7 +178,7 @@ export function BookingActions({
       {reviewable && (
         <Dialog open={reviewOpen} onOpenChange={setReviewOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700">Write a review</Button>
+            <Button>Write a review</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -190,7 +190,7 @@ export function BookingActions({
                   <button
                     key={n}
                     onClick={() => setRating(n)}
-                    className={n <= rating ? "text-amber-500" : "text-neutral-300"}
+                    className={n <= rating ? "text-[var(--gold-500)]" : "text-neutral-300"}
                   >
                     ★
                   </button>
@@ -201,7 +201,7 @@ export function BookingActions({
                   <Badge
                     key={t}
                     variant={tags.includes(t) ? "default" : "outline"}
-                    className={`cursor-pointer ${tags.includes(t) ? "bg-emerald-600" : ""}`}
+                    className={`cursor-pointer ${tags.includes(t) ? "" : ""}`}
                     onClick={() =>
                       setTags((prev) =>
                         prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]
@@ -219,7 +219,7 @@ export function BookingActions({
               />
             </div>
             <DialogFooter>
-              <Button disabled={busy} onClick={submitReview} className="bg-emerald-600 hover:bg-emerald-700">
+              <Button disabled={busy} onClick={submitReview}>
                 {busy ? "Submitting…" : "Submit review"}
               </Button>
             </DialogFooter>

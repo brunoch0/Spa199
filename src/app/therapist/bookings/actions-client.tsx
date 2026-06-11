@@ -42,7 +42,7 @@ export function TherapistBookingActions({
           size="sm"
           disabled={busy}
           onClick={() => update("confirmed", "Booking accepted ✓")}
-          className="bg-emerald-600 hover:bg-emerald-700"
+         
         >
           Accept
         </Button>

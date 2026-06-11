@@ -58,14 +58,14 @@ function SignupForm() {
           <RadioGroup value={role} onValueChange={setRole} className="grid grid-cols-2 gap-3">
             <Label
               htmlFor="r-customer"
-              className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${role === "customer" ? "border-emerald-500 bg-emerald-50" : ""}`}
+              className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${role === "customer" ? "border-[var(--gold-500)] bg-[var(--gold-50)]" : ""}`}
             >
               <RadioGroupItem value="customer" id="r-customer" />
               I need a massage
             </Label>
             <Label
               htmlFor="r-therapist"
-              className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${role === "therapist" ? "border-emerald-500 bg-emerald-50" : ""}`}
+              className={`flex cursor-pointer items-center gap-2 rounded-lg border p-3 ${role === "therapist" ? "border-[var(--gold-500)] bg-[var(--gold-50)]" : ""}`}
             >
               <RadioGroupItem value="therapist" id="r-therapist" />
               I&apos;m a therapist
@@ -88,13 +88,13 @@ function SignupForm() {
             <Label htmlFor="password">Password (min. 6 characters)</Label>
             <Input id="password" name="password" type="password" minLength={6} required />
           </div>
-          <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Creating account…" : "Sign up"}
           </Button>
         </form>
         <p className="mt-4 text-center text-sm text-neutral-600">
           Already have an account?{" "}
-          <Link href="/login" className="font-medium text-emerald-700 hover:underline">
+          <Link href="/login" className="font-medium text-[var(--text-gold)] hover:underline">
             Log in
           </Link>
         </p>

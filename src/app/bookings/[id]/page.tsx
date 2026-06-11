@@ -67,7 +67,7 @@ export default async function BookingDetailPage({
               <p className="font-medium">{b.therapist?.profile?.full_name}</p>
               <Link
                 href={`/therapists/${b.therapist_id}`}
-                className="text-sm text-emerald-700 hover:underline"
+                className="text-sm text-[var(--text-gold)] hover:underline"
               >
                 View profile
               </Link>
@@ -109,7 +109,7 @@ export default async function BookingDetailPage({
               </p>
             )}
             {b.refund_amount_aed !== null && (
-              <p className="flex justify-between text-emerald-700">
+              <p className="flex justify-between text-[var(--text-gold)]">
                 <span>Refunded</span>
                 <span>{formatAED(b.refund_amount_aed)}</span>
               </p>
@@ -140,7 +140,7 @@ export default async function BookingDetailPage({
                 </div>
                 <p className="mt-1 text-neutral-600">{q.detail}</p>
                 {q.admin_reply && (
-                  <p className="mt-2 rounded bg-emerald-50 p-2 text-emerald-900">
+                  <p className="mt-2 rounded bg-[var(--gold-50)] p-2 text-[var(--gold-800)]">
                     <span className="font-medium">spa199:</span> {q.admin_reply}
                   </p>
                 )}

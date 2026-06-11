@@ -24,7 +24,7 @@ export default async function AdminReviewsPage() {
                 <span className="font-medium">{r.customer?.full_name}</span>
                 <span className="text-neutral-400"> → </span>
                 <span className="font-medium">{r.therapist?.profile?.full_name}</span>
-                <span className="ml-2 text-amber-600">{"★".repeat(r.rating)}</span>
+                <span className="ml-2 text-[var(--gold-500)]">{"★".repeat(r.rating)}</span>
               </p>
               <Badge
                 variant={r.status === "published" ? "outline" : r.status === "pending" ? "secondary" : "destructive"}

@@ -66,19 +66,19 @@ function LoginForm() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">Password</Label>
-              <Link href="/reset-password" className="text-sm text-emerald-700 hover:underline">
+              <Link href="/reset-password" className="text-sm text-[var(--text-gold)] hover:underline">
                 Forgot password?
               </Link>
             </div>
             <Input id="password" name="password" type="password" required />
           </div>
-          <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Signing in…" : "Log in"}
           </Button>
         </form>
         <p className="mt-4 text-center text-sm text-neutral-600">
           New to spa199?{" "}
-          <Link href="/signup" className="font-medium text-emerald-700 hover:underline">
+          <Link href="/signup" className="font-medium text-[var(--text-gold)] hover:underline">
             Create an account
           </Link>
         </p>

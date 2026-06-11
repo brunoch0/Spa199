@@ -12,7 +12,7 @@ export function TherapistCard({ therapist }: { therapist: Therapist }) {
 
   return (
     <Link href={`/therapists/${therapist.id}`}>
-      <Card className="h-full transition hover:border-emerald-400 hover:shadow-md">
+      <Card className="h-full transition hover:border-[var(--gold-400)] hover:shadow-md">
         <CardContent className="flex gap-4 p-4">
           <Avatar className="size-16 shrink-0">
             <AvatarImage src={therapist.profile?.avatar_url ?? undefined} />
@@ -21,7 +21,7 @@ export function TherapistCard({ therapist }: { therapist: Therapist }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-2">
               <p className="truncate font-semibold">{therapist.profile?.full_name}</p>
-              <span className="shrink-0 text-sm font-medium text-amber-600">
+              <span className="shrink-0 text-sm font-medium text-[var(--gold-500)]">
                 ★ {Number(therapist.rating_avg).toFixed(1)}
                 <span className="text-neutral-400"> ({therapist.rating_count})</span>
               </span>
@@ -38,7 +38,7 @@ export function TherapistCard({ therapist }: { therapist: Therapist }) {
             </div>
             {minPrice !== null && (
               <p className="mt-2 text-sm">
-                from <span className="font-semibold text-emerald-700">{formatAED(minPrice)}</span>
+                from <span className="font-semibold text-[var(--text-gold)]">{formatAED(minPrice)}</span>
               </p>
             )}
           </div>

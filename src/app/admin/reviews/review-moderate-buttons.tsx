@@ -32,7 +32,7 @@ export function ReviewModerateButtons({
   return (
     <div className="flex gap-2">
       {status !== "published" && (
-        <Button size="sm" variant="outline" disabled={busy} onClick={() => setStatus("published")} className="text-emerald-600">
+        <Button size="sm" variant="outline" disabled={busy} onClick={() => setStatus("published")} className="text-[var(--text-gold)]">
           Publish
         </Button>
       )}

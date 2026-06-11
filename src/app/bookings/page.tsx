@@ -30,7 +30,7 @@ export default async function BookingsPage() {
         <Card>
           <CardContent className="p-10 text-center text-neutral-500">
             No bookings yet.{" "}
-            <Link href="/search" className="font-medium text-emerald-700 hover:underline">
+            <Link href="/search" className="font-medium text-[var(--text-gold)] hover:underline">
               Find a therapist →
             </Link>
           </CardContent>
@@ -38,7 +38,7 @@ export default async function BookingsPage() {
       )}
       {bookings?.map((b) => (
         <Link key={b.id} href={`/bookings/${b.id}`} className="block">
-          <Card className="transition hover:border-emerald-400 hover:shadow-sm">
+          <Card className="transition hover:border-[var(--gold-400)] hover:shadow-sm">
             <CardContent className="flex items-center justify-between p-4">
               <div>
                 <p className="font-medium">

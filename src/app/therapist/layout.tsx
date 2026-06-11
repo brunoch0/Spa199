@@ -26,7 +26,7 @@ export default async function TherapistLayout({
           <Link
             key={n.href}
             href={n.href}
-            className="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-neutral-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+            className="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-neutral-600 transition hover:bg-[var(--gold-50)] hover:text-[var(--text-gold)]"
           >
             {n.label}
           </Link>

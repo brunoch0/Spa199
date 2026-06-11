@@ -27,22 +27,64 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="space-y-10">
-      {/* Hero */}
-      <section className="rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 px-6 py-12 text-white sm:px-10">
-        <h1 className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl">
-          {dict.heroTitle1}
-          <br />
-          {dict.heroTitle2}
-        </h1>
-        <p className="mt-3 max-w-md text-emerald-50">{dict.heroSubtitle}</p>
-        <div className="mt-6 flex gap-3">
-          <Button asChild size="lg" className="bg-white text-emerald-700 hover:bg-emerald-50">
-            <Link href="/search">{dict.bookNow}</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white">
-            <Link href="/signup?role=therapist">{dict.joinAsTherapist}</Link>
-          </Button>
+    <div className="space-y-12">
+      {/* Hero — gold foil on onyx with mashrabiya lattice */}
+      <section
+        className="relative overflow-hidden rounded-3xl"
+        style={{ background: "var(--onyx-950)", boxShadow: "var(--shadow-dark)" }}
+      >
+        <div className="bg-mashrabiya absolute inset-0 opacity-50" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 85% 10%, rgba(192,151,75,0.22), transparent 60%)",
+          }}
+        />
+        <div className="relative px-6 py-12 sm:px-12 sm:py-14">
+          <p className="t-overline" style={{ color: "var(--gold-300)" }}>
+            On-demand · Dubai
+          </p>
+          <h1
+            className="font-display mt-4 max-w-xl text-4xl leading-[1.05] sm:text-[3.5rem]"
+            style={{ color: "var(--ivory)", fontWeight: 600 }}
+          >
+            The spa, brought to
+            <br />
+            <em style={{ color: "var(--gold-300)" }}>your door</em>.
+          </h1>
+          <p
+            className="mt-5 max-w-md text-[17px] leading-relaxed"
+            style={{ color: "var(--text-on-dark-muted)" }}
+          >
+            Certified therapists, premium oils and warmed linens — at your hotel
+            or home in 60 minutes. From AED 199.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg" className="shadow-[var(--glow-gold-soft)]">
+              <Link href="/search">{dict.bookNow}</Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-[var(--border-on-dark)] bg-transparent text-[var(--gold-200)] hover:border-[var(--gold-300)] hover:bg-[rgba(220,190,124,0.12)] hover:text-[var(--gold-100)]"
+            >
+              <Link href="/signup?role=therapist">{dict.joinAsTherapist}</Link>
+            </Button>
+          </div>
+          <div className="mt-9 flex flex-wrap gap-x-7 gap-y-2">
+            {["Vetted & insured", "Arrives in 60 min", "5-star rated"].map((t) => (
+              <span
+                key={t}
+                className="inline-flex items-center gap-2 text-[13px] font-medium"
+                style={{ color: "var(--gold-200)" }}
+              >
+                <span style={{ color: "var(--gold-400)" }}>✦</span>
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -50,14 +92,14 @@ export default async function HomePage() {
       {notices && notices.length > 0 && (
         <section className="grid gap-3 sm:grid-cols-2">
           {notices.map((n) => (
-            <Card key={n.id} className="border-emerald-100 bg-emerald-50/50">
+            <Card key={n.id} className="border-[var(--gold-200)] bg-[var(--gold-50)]">
               <CardContent className="flex items-start gap-3 p-4">
-                <Badge variant={n.type === "promotion" ? "default" : "secondary"} className={n.type === "promotion" ? "bg-emerald-600" : ""}>
+                <Badge variant={n.type === "promotion" ? "default" : "secondary"}>
                   {n.type === "promotion" ? "Promo" : "Notice"}
                 </Badge>
                 <div>
                   <p className="font-medium">{n.title}</p>
-                  <p className="mt-1 text-sm text-neutral-600">{n.body}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{n.body}</p>
                 </div>
               </CardContent>
             </Card>
@@ -65,15 +107,23 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Service types */}
+      {/* Treatments */}
       <section>
-        <h2 className="mb-3 text-xl font-semibold">{dict.browseByTreatment}</h2>
+        <div className="mb-4 flex items-end justify-between">
+          <h2 className="text-3xl">{dict.browseByTreatment}</h2>
+          <Link
+            href="/search"
+            className="text-sm font-medium text-[var(--text-gold)] hover:underline"
+          >
+            {dict.viewAll}
+          </Link>
+        </div>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
           {SERVICE_TYPES.map((s) => (
             <Link
               key={s.value}
               href={`/search?service=${s.value}`}
-              className="rounded-xl border bg-white p-3 text-center text-sm font-medium transition hover:border-emerald-400 hover:shadow-sm"
+              className="rounded-xl border bg-card p-3 text-center text-sm font-medium transition hover:border-[var(--gold-400)] hover:shadow-sm"
             >
               {s.label}
             </Link>
@@ -83,11 +133,14 @@ export default async function HomePage() {
 
       {/* Top therapists */}
       <section>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">{dict.topRatedTherapists}</h2>
-          <Button asChild variant="link" className="text-emerald-700">
-            <Link href="/search">{dict.viewAll}</Link>
-          </Button>
+        <div className="mb-4 flex items-end justify-between">
+          <h2 className="text-3xl">{dict.topRatedTherapists}</h2>
+          <Link
+            href="/search"
+            className="text-sm font-medium text-[var(--text-gold)] hover:underline"
+          >
+            {dict.viewAll}
+          </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {(therapists as Therapist[] | null)?.map((t) => (
@@ -96,21 +149,38 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="rounded-2xl border bg-white p-6">
-        <h2 className="mb-4 text-xl font-semibold">{dict.howItWorks}</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
+      {/* How it works — three steps to stillness */}
+      <section className="grid overflow-hidden rounded-3xl border bg-card sm:grid-cols-[1.1fr_1fr]">
+        <div className="px-8 py-10 sm:px-11">
+          <p className="t-overline">{dict.howItWorks}</p>
+          <h2 className="mt-2 mb-7 text-3xl">Three steps to stillness</h2>
           {[
-            [dict.step1Title, dict.step1Desc],
-            [dict.step2Title, dict.step2Desc],
-            [dict.step3Title, dict.step3Desc],
-          ].map(([title, desc]) => (
-            <div key={title}>
-              <p className="font-semibold text-emerald-700">{title}</p>
-              <p className="mt-1 text-sm text-neutral-600">{desc}</p>
+            ["Choose", "Pick a treatment and a therapist you trust — read real guest reviews."],
+            ["Schedule", "Select a time and share your address. Free cancellation up to 48 hours."],
+            ["Unwind", "Your therapist arrives fully equipped. You simply relax."],
+          ].map(([title, desc], i) => (
+            <div key={title} className="mb-5 flex gap-4">
+              <span
+                className="font-display inline-flex size-9 shrink-0 items-center justify-center rounded-full text-[22px]"
+                style={{
+                  color: "var(--gold-500)",
+                  border: "1.5px solid var(--border-gold)",
+                  fontWeight: 600,
+                }}
+              >
+                {i + 1}
+              </span>
+              <div>
+                <p className="font-semibold">{title}</p>
+                <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{desc}</p>
+              </div>
             </div>
           ))}
         </div>
+        <div
+          className="min-h-[280px] bg-cover bg-center"
+          style={{ backgroundImage: "url(/brand/photo-treatment-room.jpeg)" }}
+        />
       </section>
     </div>
   );

@@ -48,13 +48,13 @@ export default function ResetPasswordPage() {
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" type="email" required placeholder="you@example.com" />
             </div>
-            <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Sending…" : "Send reset link"}
             </Button>
           </form>
         )}
         <p className="mt-4 text-center text-sm text-neutral-600">
-          <Link href="/login" className="font-medium text-emerald-700 hover:underline">
+          <Link href="/login" className="font-medium text-[var(--text-gold)] hover:underline">
             Back to log in
           </Link>
         </p>

@@ -118,7 +118,7 @@ export default function AccountPage() {
               <Label htmlFor="phone">{dict.phone}</Label>
               <Input id="phone" name="phone" defaultValue={profile.phone ?? ""} />
             </div>
-            <Button type="submit" disabled={busy} className="bg-emerald-600 hover:bg-emerald-700">
+            <Button type="submit" disabled={busy}>
               {busy ? dict.saving : dict.saveChanges}
             </Button>
           </form>

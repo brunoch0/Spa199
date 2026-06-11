@@ -30,7 +30,7 @@ export default async function AdminInquiriesPage() {
             </div>
             <p className="text-sm text-neutral-700">{q.detail}</p>
             {q.admin_reply && (
-              <p className="rounded bg-emerald-50 p-2 text-sm text-emerald-900">
+              <p className="rounded bg-[var(--gold-50)] p-2 text-sm text-[var(--gold-800)]">
                 <span className="font-medium">Reply:</span> {q.admin_reply}
               </p>
             )}

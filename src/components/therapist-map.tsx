@@ -10,7 +10,7 @@ import type { Therapist } from "@/lib/types";
 
 const pinIcon = L.divIcon({
   className: "",
-  html: `<div style="background:#059669;color:#fff;border-radius:9999px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)">💆</div>`,
+  html: `<div style="background:#C0974B;color:#0B0B0D;border-radius:9999px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;border:2.5px solid #F0EADD;box-shadow:0 2px 6px rgba(0,0,0,.35)">💆</div>`,
   iconSize: [34, 34],
   iconAnchor: [17, 17],
 });
@@ -66,13 +66,13 @@ export default function TherapistMap({ therapists }: { therapists: Therapist[] }
                     {t.specialties.slice(0, 3).map(serviceLabel).join(" · ")}
                   </p>
                   {minPrice !== null && (
-                    <p style={{ margin: "2px 0", fontSize: 13, fontWeight: 600, color: "#047857" }}>
+                    <p style={{ margin: "2px 0", fontSize: 13, fontWeight: 600, color: "#A87E39" }}>
                       from {formatAED(minPrice)}
                     </p>
                   )}
                   <Link
                     href={`/therapists/${t.id}`}
-                    style={{ fontSize: 13, fontWeight: 600, color: "#047857" }}
+                    style={{ fontSize: 13, fontWeight: 600, color: "#A87E39" }}
                   >
                     View profile →
                   </Link>
