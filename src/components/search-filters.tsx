@@ -27,7 +27,12 @@ function Filters() {
     router.push(`/search?${params.toString()}`);
   }
 
-  const hasFilters = ["service", "area", "maxPrice"].some((k) => searchParams.get(k));
+  const hasFilters = ["service", "area", "maxPrice", "date", "time"].some((k) =>
+    searchParams.get(k)
+  );
+  const today = new Date().toISOString().slice(0, 10);
+  const maxDate = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
+  const HOURS = Array.from({ length: 15 }, (_, i) => `${String(i + 8).padStart(2, "0")}:00`);
 
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -77,6 +82,33 @@ function Filters() {
           {[199, 250, 300, 400].map((p) => (
             <SelectItem key={p} value={String(p)}>
               {dict.upTo} {p}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <input
+        type="date"
+        value={searchParams.get("date") ?? ""}
+        min={today}
+        max={maxDate}
+        onChange={(e) => setParam("date", e.target.value)}
+        aria-label={dict.dateFilter}
+        className="h-9 rounded-md border bg-white px-2 text-sm"
+      />
+
+      <Select
+        value={searchParams.get("time") ?? ALL}
+        onValueChange={(v) => setParam("time", v)}
+      >
+        <SelectTrigger className="w-[120px] bg-white">
+          <SelectValue placeholder={dict.timeFilter} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={ALL}>{dict.anyTime}</SelectItem>
+          {HOURS.map((h) => (
+            <SelectItem key={h} value={h}>
+              {h}
             </SelectItem>
           ))}
         </SelectContent>

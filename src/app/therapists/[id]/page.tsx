@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { serviceLabel, formatAED } from "@/lib/constants";
 import { ReportReviewButton } from "@/components/report-review-button";
 import { ZoomablePhoto, PhotoGrid } from "@/components/zoomable-photo";
+import { FavoriteButton } from "@/components/favorite-button";
 import type { Review, Therapist } from "@/lib/types";
 
 export default async function TherapistDetailPage({
@@ -75,9 +76,12 @@ export default async function TherapistDetailPage({
               ))}
             </div>
           </div>
-          <Button asChild size="lg">
-            <Link href={`/book/${therapist.id}`}>Book now</Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <FavoriteButton therapistId={therapist.id} />
+            <Button asChild size="lg">
+              <Link href={`/book/${therapist.id}`}>Book now</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

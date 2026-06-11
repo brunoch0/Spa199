@@ -50,6 +50,28 @@ export const AREA_COORDS: Record<string, [number, number]> = {
   "Festival City": [25.2222, 55.3522],
 };
 
+// reviews containing these terms are auto-held for admin moderation (spec 3.3.1)
+export const REVIEW_FLAG_KEYWORDS = [
+  "extra",
+  "extras",
+  "special service",
+  "happy ending",
+  "full service",
+  "b2b",
+  "nuru",
+  "sensual",
+  "erotic",
+  "whatsapp me",
+  "call me",
+  "outside the app",
+  "cash only",
+];
+
+export function shouldHoldReview(text: string): boolean {
+  const lower = text.toLowerCase();
+  return REVIEW_FLAG_KEYWORDS.some((k) => lower.includes(k));
+}
+
 export const REVIEW_TAGS = [
   "professional",
   "punctual",

@@ -169,6 +169,16 @@ export default function AccountPage() {
         </CardContent>
       </Card>
 
+      {profile.role === "customer" && (
+        <Card>
+          <CardContent className="p-4">
+            <a href="/favorites" className="text-sm font-medium text-[var(--text-gold)] hover:underline">
+              ♡ My favorites →
+            </a>
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardContent className="flex items-center justify-between p-4">
           <p className="text-sm text-neutral-600">

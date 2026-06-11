@@ -20,6 +20,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { generateSlots } from "@/lib/slots";
+import { createBookingCheckout } from "@/app/book/actions";
 import { useI18n } from "@/lib/i18n";
 import { serviceLabel, formatAED, DUBAI_AREAS } from "@/lib/constants";
 import type { AvailabilitySlot, Therapist, TherapistService } from "@/lib/types";
@@ -116,63 +117,31 @@ export default function BookingPage() {
       router.push(`/login?next=/book/${therapistId}`);
       return;
     }
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("id")
-      .eq("auth_id", user.id)
-      .single();
-    if (!profile) {
-      toast.error("Profile not found. Please log in again.");
-      setSubmitting(false);
-      return;
-    }
 
-    const [h, m] = time.split(":").map(Number);
-    const endMin = h * 60 + m + service.duration_min;
-    const endTime = `${String(Math.floor(endMin / 60)).padStart(2, "0")}:${String(endMin % 60).padStart(2, "0")}`;
-
-    const { data: booking, error } = await supabase
-      .from("bookings")
-      .insert({
-        customer_id: profile.id,
-        therapist_id: therapistId,
-        service_id: service.id,
-        service_type: service.service_type,
-        duration_min: service.duration_min,
-        price_aed: finalPrice,
-        booking_date: date.toISOString().slice(0, 10),
-        start_time: time,
-        end_time: endTime,
-        address_text: address,
-        area: area || null,
-        visit_notes: notes || null,
-        status: "requested",
-      })
-      .select("id")
-      .single();
-
-    if (error || !booking) {
-      toast.error(error?.message ?? "Booking failed");
-      setSubmitting(false);
-      return;
-    }
-
-    // demo payment (real PSP integration comes later)
-    const { error: payError } = await supabase.from("payments").insert({
-      booking_id: booking.id,
-      amount_aed: finalPrice,
-      method: payMethod,
-      status: "paid",
+    const result = await createBookingCheckout({
+      therapistId,
+      serviceId: service.id,
+      bookingDate: date.toISOString().slice(0, 10),
+      startTime: time,
+      address,
+      area: area || null,
+      notes: notes || null,
+      payMethod,
     });
 
-    if (payError) {
-      toast.error(payError.message);
+    if (result.error) {
+      toast.error(result.error);
       setSubmitting(false);
+      return;
+    }
+
+    if (result.mode === "stripe" && result.checkoutUrl) {
+      window.location.href = result.checkoutUrl; // Stripe-hosted payment page
       return;
     }
 
     toast.success(dict.bookingRequested);
-    router.push(`/bookings/${booking.id}`);
+    router.push(`/bookings/${result.bookingId}`);
   }
 
   if (!therapist) {

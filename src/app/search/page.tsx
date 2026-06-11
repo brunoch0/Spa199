@@ -2,14 +2,21 @@ import { createClient } from "@/lib/supabase/server";
 import { getServerDict } from "@/lib/i18n/server";
 import { SearchFilters } from "@/components/search-filters";
 import { SearchResults } from "@/components/search-results";
-import type { Therapist } from "@/lib/types";
+import { isAvailableAt } from "@/lib/slots";
+import type { AvailabilitySlot, Therapist } from "@/lib/types";
 
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ service?: string; area?: string; maxPrice?: string }>;
+  searchParams: Promise<{
+    service?: string;
+    area?: string;
+    maxPrice?: string;
+    date?: string;
+    time?: string;
+  }>;
 }) {
-  const { service, area, maxPrice } = await searchParams;
+  const { service, area, maxPrice, date, time } = await searchParams;
   const [supabase, { dict }] = await Promise.all([createClient(), getServerDict()]);
 
   let query = supabase
@@ -28,6 +35,34 @@ export default async function SearchPage({
     const cap = Number(maxPrice);
     therapists = therapists.filter((t) =>
       t.services?.some((s) => Number(s.price_aed) <= cap)
+    );
+  }
+
+  // availability filter: keep therapists who can host a 60-min session at date+time
+  if (date && time && therapists.length > 0) {
+    const ids = therapists.map((t) => t.id);
+    const [{ data: avail }, { data: busy }, { data: exc }] = await Promise.all([
+      supabase.from("availability_slots").select("*").in("therapist_id", ids),
+      supabase.from("booked_slots").select("*").in("therapist_id", ids).eq("booking_date", date),
+      supabase
+        .from("availability_exceptions")
+        .select("therapist_id, date")
+        .in("therapist_id", ids)
+        .eq("date", date)
+        .eq("is_off", true),
+    ]);
+
+    // noon anchor keeps toISOString()/getDay() on the same calendar date in any TZ
+    const target = new Date(`${date}T12:00:00`);
+    therapists = therapists.filter((t) =>
+      isAvailableAt(
+        target,
+        time,
+        60,
+        ((avail as AvailabilitySlot[]) ?? []).filter((a) => a.therapist_id === t.id),
+        (busy ?? []).filter((b: { therapist_id: string }) => b.therapist_id === t.id),
+        (exc ?? []).some((e: { therapist_id: string }) => e.therapist_id === t.id)
+      )
     );
   }
 

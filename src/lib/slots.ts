@@ -13,6 +13,18 @@ const toMin = (t: string) => {
 const toTime = (min: number) =>
   `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`;
 
+// True if the therapist can host a session of durationMin starting at timeStr on date.
+export function isAvailableAt(
+  date: Date,
+  timeStr: string,
+  durationMin: number,
+  availability: AvailabilitySlot[],
+  busy: BusySlot[],
+  hasException: boolean
+): boolean {
+  return generateSlots(date, durationMin, availability, busy, hasException).includes(timeStr);
+}
+
 // Generate hourly-start slots for a date that fit duration inside availability
 // windows and don't overlap existing bookings.
 export function generateSlots(

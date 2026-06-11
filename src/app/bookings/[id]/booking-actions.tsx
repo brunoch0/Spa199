@@ -25,7 +25,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { calcRefund } from "@/lib/refund";
-import { formatAED, REVIEW_TAGS } from "@/lib/constants";
+import { cancelBooking as cancelBookingAction } from "@/app/bookings/actions";
+import { formatAED, REVIEW_TAGS, shouldHoldReview } from "@/lib/constants";
 import type { Booking } from "@/lib/types";
 
 const INQUIRY_REASONS = [
@@ -68,31 +69,12 @@ export function BookingActions({
 
   async function cancelBooking() {
     setBusy(true);
-    const { error } = await supabase
-      .from("bookings")
-      .update({
-        status: "cancelled",
-        cancelled_at: new Date().toISOString(),
-        cancel_reason: "Cancelled by customer",
-        refund_amount_aed: refund.refundAed,
-      })
-      .eq("id", booking.id);
-
-    if (!error) {
-      await supabase
-        .from("payments")
-        .update({
-          status: refund.ratePct === 100 ? "refunded" : refund.ratePct > 0 ? "partially_refunded" : "paid",
-          refund_amount_aed: refund.refundAed,
-        })
-        .eq("booking_id", booking.id);
-    }
-
+    const result = await cancelBookingAction(booking.id);
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (result.error) return toast.error(result.error);
     toast.success(
-      refund.refundAed > 0
-        ? `Cancelled. ${formatAED(refund.refundAed)} will be refunded.`
+      (result.refundAed ?? 0) > 0
+        ? `Cancelled. ${formatAED(result.refundAed!)} will be refunded.`
         : "Booking cancelled."
     );
     setCancelOpen(false);
@@ -101,6 +83,7 @@ export function BookingActions({
 
   async function submitReview() {
     setBusy(true);
+    const held = shouldHoldReview(comment);
     const { error } = await supabase.from("reviews").insert({
       booking_id: booking.id,
       customer_id: profileId,
@@ -108,10 +91,15 @@ export function BookingActions({
       rating,
       comment,
       tags,
+      status: held ? "pending" : "published",
     });
     setBusy(false);
     if (error) return toast.error(error.message);
-    toast.success("Thanks for your review!");
+    toast.success(
+      held
+        ? "Thanks! Your review will appear after a quick moderation check."
+        : "Thanks for your review!"
+    );
     setReviewOpen(false);
     router.refresh();
   }

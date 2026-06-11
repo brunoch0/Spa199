@@ -116,6 +116,12 @@ const en = {
 
   // promo
   firstBookingPromo: "First booking promo −20%",
+
+  // availability filter
+  dateFilter: "Date",
+  timeFilter: "Time",
+  anyTime: "Any time",
+  availableAt: "available",
 };
 
 const ar: typeof en = {
@@ -218,6 +224,11 @@ const ar: typeof en = {
   markAllRead: "تحديد الكل كمقروء",
 
   firstBookingPromo: "خصم 20% على الحجز الأول",
+
+  dateFilter: "التاريخ",
+  timeFilter: "الوقت",
+  anyTime: "أي وقت",
+  availableAt: "متاح",
 };
 
 const ko: typeof en = {
@@ -320,6 +331,11 @@ const ko: typeof en = {
   markAllRead: "모두 읽음 처리",
 
   firstBookingPromo: "첫 예약 프로모 −20%",
+
+  dateFilter: "날짜",
+  timeFilter: "시간",
+  anyTime: "전체 시간",
+  availableAt: "예약 가능",
 };
 
 
@@ -423,6 +439,11 @@ const th: typeof en = {
   markAllRead: "อ่านทั้งหมดแล้ว",
 
   firstBookingPromo: "โปรจองครั้งแรก ลด 20%",
+
+  dateFilter: "วันที่",
+  timeFilter: "เวลา",
+  anyTime: "ทุกเวลา",
+  availableAt: "ว่าง",
 };
 
 export type Dict = typeof en;
