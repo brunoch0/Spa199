@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Cormorant_Garamond } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { I18nProvider } from "@/lib/i18n";
 import { getLocale } from "@/lib/i18n/server";
 import "./globals.css";
@@ -28,11 +29,12 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
-        className={`${geist.variable} ${cormorant.variable} ${geist.className} antialiased min-h-screen bg-background`}
+        className={`${geist.variable} ${cormorant.variable} ${geist.className} antialiased flex min-h-screen flex-col bg-background`}
       >
         <I18nProvider locale={locale}>
           <SiteHeader />
-          <main className="mx-auto w-full max-w-5xl px-4 pb-24 pt-6">{children}</main>
+          <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6">{children}</main>
+          <SiteFooter />
           <Toaster position="top-center" />
         </I18nProvider>
       </body>
